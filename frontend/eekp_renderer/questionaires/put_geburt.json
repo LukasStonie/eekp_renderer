@@ -1,0 +1,1855 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "geburt",
+  "url": "https://fhir.hl7.at/eEKP-GK",
+  "title": "Geburt Kind",
+  "status": "draft",
+  "description": "Fragebogen zur Erfassung der Geburt im elektronischen Eltern-Kind-Pass (eEKP)",
+  "purpose": "Als Schnittstellenbeschreibung für die Implementierung von Erfassungstools",
+  "code": [
+    {
+      "system": "EKP_TP-6",
+      "code": "A - Geburt Kind",
+      "display": "Geburt"
+    }
+  ],
+  "item": [
+    {
+      "type": "date",
+      "linkId": "891282292757",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebDat",
+          "display": "Datum der Untersuchung: TT.MM.JJJJ"
+        }
+      ],
+      "text": "Datum der Untersuchung: TT.MM.JJJJ",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "date",
+      "linkId": "663888526103",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebDat",
+          "display": "Geburt am"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "184099003",
+          "display": "Date of birth"
+        }
+      ],
+      "text": "Geburt am",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "time",
+      "linkId": "249087748499",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebZeit_1",
+          "display": "Uhrzeit der Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "397836004",
+          "display": "Time of delivery"
+        }
+      ],
+      "text": "Uhrzeit ",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "integer",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "system": "http://unitsofmeasure.org",
+            "code": "wk",
+            "display": "week"
+          }
+        }
+      ],
+      "linkId": "275028227644",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_SSWTage",
+          "display": "SSW + Tage"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "412726003",
+          "display": "Gestationsdauer zum Zeitpunkt der Geburt"
+        }
+      ],
+      "text": "SSW + Tage",
+      "readOnly": true,
+      "item": [
+        {
+          "linkId": "275028227644_helpText",
+          "type": "display",
+          "text": "SSW 2-stellig",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "integer",
+      "maxLength": 2,
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "system": "http://unitsofmeasure.org",
+            "code": "a",
+            "display": "year"
+          }
+        }
+      ],
+      "linkId": "710040183528",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_AltMu",
+          "display": "Alter bei Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "424144002",
+          "display": "Current chronological age"
+        }
+      ],
+      "text": "Alter bei Geburt",
+      "repeats": false,
+      "readOnly": true
+    },
+    {
+      "item": [
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "GS_OrtGeb",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_OrtGebSonst",
+              "display": "Sonstiges"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "74964007",
+              "display": "Other (qualifier value)"
+            }
+          ],
+          "text": "Sonstiges",
+          "enableWhen": [
+            {
+              "question": "656814558195",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "656814558195",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_OrtGeb",
+          "display": "Ort der Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169812000",
+          "display": "Place of birth"
+        }
+      ],
+      "text": "Ort der Geburt",
+      "required": true,
+      "repeats": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "1351339005",
+            "display": "Krankenhaus"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "169813005",
+            "display": "Hausgeburt"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "91154008",
+            "display": "Hebammenpraxis"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "169817006",
+            "display": "Transportmittel"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "74964007",
+            "display": "Sonstiges"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "GS_MedBegGeb",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_MedBegGebSonst",
+              "display": "Sonstiges"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "74964007",
+              "display": "Other (qualifier value)"
+            }
+          ],
+          "text": "Sonstiges",
+          "enableWhen": [
+            {
+              "question": "173471120169",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "173471120169",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_MedBegGeb",
+          "display": "Medizinische Begleitung bei der Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "816968003",
+          "display": " Labor and birth support"
+        }
+      ],
+      "text": "Medizinische Begleitung bei der Geburt",
+      "required": false,
+      "repeats": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "309343006",
+            "display": "Arzt/Ärztin"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "309453006",
+            "display": "Hebamme"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "74964007",
+            "display": "Sonstiges"
+          }
+        }
+      ]
+    },
+    {
+      "type": "time",
+      "linkId": "652291660040",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebDauSt",
+          "display": "Geburtsdauer: Stunden vor Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "289248003",
+          "display": "Duration of labour"
+        },
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebDauMin",
+          "display": "Geburtsdauer: Minuten"
+        }
+      ],
+      "text": "Geburtsdauer: Stunden vor Geburt, Geburtsdauer: Minuten",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "time",
+      "linkId": "285274148236",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_BlasSprSt",
+          "display": "Blasensprung vor Geburt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "1351273002",
+          "display": "Length of time between rupture of membranes and birth (observable entity)"
+        },
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_BlasSprMin",
+          "display": "Blasensprung: Minuten"
+        }
+      ],
+      "text": "Blasensprung vor Geburt, Blasensprung: Minuten",
+      "required": false,
+      "repeats": false
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "937403963269",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_FruWasFar",
+          "display": "Fruchtwasserfarbe"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "168089007",
+          "display": "Amniotic fluid appearance"
+        }
+      ],
+      "text": "Fruchtwasserfarbe",
+      "required": true,
+      "repeats": false,
+      "readOnly": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "168090003",
+            "display": "klar"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "408781009",
+            "display": "missfärbig"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "289294000",
+            "display": "signifikant grün"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "249134008",
+            "display": "blutig"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "1351322008",
+            "display": "putrid"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "380152686557",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_FruWasMen",
+          "display": "Fruchtwassermenge"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "364354005",
+          "display": "Quantity of liquor "
+        }
+      ],
+      "text": "Fruchtwassermenge",
+      "required": true,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "278092006",
+            "display": "normal"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "289293006",
+            "display": "vermehrt"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "1228877003",
+            "display": "vermindert"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "GS_MutErk",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_MutErkSonst",
+              "display": "Sonstiges"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "74964007",
+              "display": "Other (qualifier value)"
+            }
+          ],
+          "text": "Sonstiges",
+          "enableWhen": [
+            {
+              "question": "572789344331",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "572789344331",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_MutErk",
+          "display": "Mütterliche Erkrankung"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "281667005",
+          "display": "Maternal history of disorder (situation)"
+        }
+      ],
+      "text": "Mütterliche Erkrankung",
+      "repeats": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "75022004",
+            "display": "Gestationsdiabetes insulinpflichtig"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "46894009",
+            "display": "Gestationsdiabetes diätetisch behandelt"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "73211009",
+            "display": "Diabetes mellitus I/II"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "398254007",
+            "display": "Präeklampsie"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "95605009",
+            "display": "HELLP"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "74964007",
+            "display": "Sonstiges"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "GS_KindLag",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_KindLaGKonst",
+              "display": " Sonstiges"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "74964007",
+              "display": "Other (qualifier value)"
+            }
+          ],
+          "text": " Sonstiges",
+          "enableWhen": [
+            {
+              "question": "376274032984",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": true
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "376274032984",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_KindLag",
+          "display": "Kindslage"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "364607000",
+          "display": "Fetal position"
+        }
+      ],
+      "text": "Kindslage",
+      "required": true,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "70028003",
+            "display": "SL"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "6096002",
+            "display": "BEL"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "73161006",
+            "display": "QL"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "74964007",
+            "display": "Sonstiges"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "264852567376",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_WehBeg",
+          "display": "Wehenbeginn"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "249123005",
+          "display": "Onset of contractions (observable entity)"
+        }
+      ],
+      "text": "Wehenbeginn",
+      "required": true,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "84457005",
+            "display": "spontan"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "112070001",
+            "display": "eingeleitet"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "249141002",
+            "display": "kein Wehenbeginn"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "542228247930",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_GebModAnm",
+              "display": "Anmerkungen"
+            }
+          ],
+          "text": "Anmerkungen"
+        },
+        {
+          "item": [
+            {
+              "type": "string",
+              "maxLength": 250,
+              "linkId": "GS_IndOpGeb",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eEKP-GK",
+                  "code": "GK_IndOpGebSecSonst",
+                  "display": "Sonstiges"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "74964007",
+                  "display": "Other (qualifier value)"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "GS_GebMod",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://snomed.info/sct",
+                    "code": "74964007",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": false,
+              "repeats": false
+            },
+            {
+              "linkId": "749470802780_helpText",
+              "type": "display",
+              "text": "Notwendigkeit (Indikation) zur operativen Geburt aufgrund von",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "GS_GebMod",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_IndOpGebSec",
+              "display": "Indikation zur operativen Geburt"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "432678004",
+              "display": "Indication for procedure (observable entity)"
+            }
+          ],
+          "text": "Indikation zur operativen Geburt",
+          "enableWhen": [
+            {
+              "question": "826104014626",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "177141003",
+                "display": "prim. Sectio"
+              }
+            },
+            {
+              "question": "826104014626",
+              "operator": "=",
+              "answerCoding": {
+                "display": "sek. Sectio"
+              }
+            },
+            {
+              "question": "826104014626",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "274130007",
+                "display": "Akutsectio"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": false,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "177141003",
+                "display": "Wunschsectio"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "130955003",
+                "display": "kindliche Indikation (z.B. Fehlbildungen)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "1345226005",
+                "display": "drohende intrauterine Asphyxie"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "237319004",
+                "display": "mangelnder Geburtsfortschritt"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "1351244000",
+                "display": "Geburtsstillstand in der Austrittsperiode"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "1351243006",
+                "display": "Geburtsstillstand in der Eröffnungsperiode"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "367494004",
+                "display": "Frühgeburt"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "11618000",
+                "display": "Amnioninfektionssyndrom"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "45384004",
+                "display": "Mehrlingsgeburt"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        },
+        {
+          "item": [
+            {
+              "type": "string",
+              "maxLength": 250,
+              "linkId": "GS_IndOpGebVak",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eEKP-GK",
+                  "code": "GK_IndOpGebVakSonst",
+                  "display": "Sonstiges"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "74964007",
+                  "display": "Other (qualifier value)"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "417734899256",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://snomed.info/sct",
+                    "code": "74964007",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": false,
+              "repeats": false
+            },
+            {
+              "linkId": "417734899256_helpText",
+              "type": "display",
+              "text": "Notwendigkeit (Indikation) zur vaginal operativen Geburt aufgrund von",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "417734899256",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_IndOpGebVak",
+              "display": "Indikation zur vaginal operativen Geburt"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "432678004",
+              "display": "Indication for procedure (observable entity)"
+            }
+          ],
+          "text": "Indikation zur vaginal operativen Geburt",
+          "enableWhen": [
+            {
+              "question": "826104014626",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "61586001",
+                "display": "Vakuum"
+              }
+            },
+            {
+              "question": "826104014626",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "29319002",
+                "display": "Forceps"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": false,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "1345226005",
+                "display": "drohende intrauterine Asphyxie"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "237319004",
+                "display": "mangelnder Geburtsfortschritt"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "1351244000",
+                "display": "Geburtsstillstand in der Austrittsperiode"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "826104014626_helpText",
+          "type": "display",
+          "text": "Art der Geburt (Geburtsmodus)",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "826104014626",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebMod",
+          "display": "Geburtsmodus"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "364336006",
+          "display": "Pattern of delivery (observable entity)"
+        }
+      ],
+      "text": "Geburtsmodus",
+      "required": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "177184002",
+            "display": "spontan"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "177141003",
+            "display": "prim. Sectio"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "sek. Sectio"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "274130007",
+            "display": "Akutsectio"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "5556001",
+            "display": "Manualhilfe"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "61586001",
+            "display": "Vakuum"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "29319002",
+            "display": "Forceps"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "GS_GebEinl",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_GebEinArt",
+              "display": " Welche Art der Einleitung"
+            }
+          ],
+          "text": " Welche Art der Einleitung",
+          "enableWhen": [
+            {
+              "question": "419771358311",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "enableBehavior": "any",
+          "required": true,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "1365933005",
+                "display": "Mechanische Einleitung"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "31208007",
+                "display": "Medikamentöse Einleitung"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "818914398962_helpText",
+              "type": "display",
+              "text": "Auslösen von Wehen (Geburtseinleitung)",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "item": [
+            {
+              "type": "string",
+              "maxLength": 250,
+              "linkId": "GS_GebEinlMech",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eEKP-GK",
+                  "code": "GK_GebEinMechSonst",
+                  "display": "Sonstiges"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "74964007",
+                  "display": "Other (qualifier value)"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "275062780010",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://snomed.info/sct",
+                    "code": "74964007",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": false,
+              "repeats": false
+            },
+            {
+              "linkId": "413352261180_helpText",
+              "type": "display",
+              "text": "Mechanische Einleitung der Geburt",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "275062780010",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_GebEinlMech",
+              "display": "Mechanische Einleitung"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "1365933005",
+              "display": "Mechanical induction of labor"
+            }
+          ],
+          "text": "Mechanische Einleitung",
+          "enableWhen": [
+            {
+              "question": "GS_GebEinl",
+              "operator": "=",
+              "answerCoding": {
+                "code": "1365933005",
+                "display": "Mechanische Einleitung"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": false,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "425861005",
+                "display": "Ballonkatheter"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "408818004",
+                "display": "Amniotomie (Blasenöffnung)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        },
+        {
+          "item": [
+            {
+              "type": "string",
+              "maxLength": 250,
+              "linkId": "GK_GebEinlMed",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eEKP-GK",
+                  "code": "GK_GebEinMedSonst",
+                  "display": "Sonstiges"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "74964007",
+                  "display": "Other (qualifier value)"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "554449224394",
+                  "operator": "=",
+                  "answerCoding": {
+                    "code": "99",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": false,
+              "repeats": false
+            },
+            {
+              "linkId": "554449224394_helpText",
+              "type": "display",
+              "text": "Einleitung der Geburt mit Medikamenten",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "554449224394",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_GebEinlMed",
+              "display": "Medikamentöse Einleitung"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "31208007",
+              "display": "Medical induction of labor"
+            }
+          ],
+          "text": "Medikamentöse Einleitung",
+          "enableWhen": [
+            {
+              "question": "GS_GebEinl",
+              "operator": "=",
+              "answerCoding": {
+                "code": "31208007",
+                "display": "Medikamentöse Einleitung"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": false,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "177135005",
+                "display": "Oxytocin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "177136006",
+                "display": "Prostaglandine (Gel, Bändchen, vaginale und orale Tabletten)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "maxLength": 250,
+          "linkId": "463534132107",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_GebEinlInd",
+              "display": "Indikation"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "410535002",
+              "display": "Indicated (qualifier value)"
+            }
+          ],
+          "text": "Indikatíon",
+          "enableWhen": [
+            {
+              "question": "419771358311",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "enableBehavior": "any",
+          "required": false,
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "463534132107_helpText",
+              "type": "display",
+              "text": "Notwendig, weil zB vorzeitiger Blasensprung, Terminüberschreitung, Maternale Indikation",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "type": "boolean",
+      "linkId": "419771358311",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_GebEinl",
+          "display": "Geburtseinleitung"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "236958009",
+          "display": "Induction of labor (procedure)"
+        }
+      ],
+      "text": "Geburtseinleitung",
+      "required": true,
+      "repeats": true
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "type": "string",
+              "linkId": "452529813514",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eEKP-GK",
+                  "code": "GK_AnaesArtSon",
+                  "display": "Sonstiges"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "GS_Anaes",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://snomed.info/sct",
+                    "code": "74964007",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": true,
+              "repeats": false
+            },
+            {
+              "linkId": "103968718483_helpText",
+              "type": "display",
+              "text": "Art der Betäubung (Anästhesie)",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "GS_Anaes",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eEKP-GK",
+              "code": "GK_AnaesArt",
+              "display": "Art der Anästhesie"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "399084002",
+              "display": "Type of anesthetic (observable entity)"
+            }
+          ],
+          "text": "Art der Anästhesie",
+          "enableWhen": [
+            {
+              "question": "385276991296",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "enableBehavior": "any",
+          "required": true,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "386761002",
+                "display": "Lokalanästhesie"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "18946005",
+                "display": "Allgemeinanästhesie (Intubation)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "231249005",
+                "display": "Spinalanästhesie"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "231261002",
+                "display": "Periduralanästhesie/ Epiduralanästhesie"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "50697003",
+                "display": "Kombinierte Spinal-Epidural-Anästhesie (CSE)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        }
+      ],
+      "type": "boolean",
+      "linkId": "385276991296",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_Anaes",
+          "display": "Anästhesie"
+        }
+      ],
+      "text": "Anästhesie",
+      "required": true,
+      "repeats": true
+    },
+    {
+      "type": "string",
+      "maxLength": 750,
+      "linkId": "464773173906",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_Sonst",
+          "display": "Sonstige Anmerkungen "
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "74964007",
+          "display": "Other (qualifier value)"
+        }
+      ],
+      "text": "Sonstige Anmerkungen ",
+      "required": true,
+      "repeats": false,
+      "item": [
+        {
+          "linkId": "464773173906_helpText",
+          "type": "display",
+          "text": "z.B.: Besonderheiten des Kindes",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "712527269812",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_BlutVerl",
+          "display": "Blutverlust"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "409085004",
+          "display": "Quantity of maternal blood loss (observable entity)"
+        }
+      ],
+      "text": "Blutverlust",
+      "required": true,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "289244001",
+            "display": "normal (≤500ml)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "289246004",
+            "display": "vermehrt (bei Spontangeburt >500ml, oder bei Sectio > 1000ml)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "maxLength": 750,
+      "linkId": "235569733794",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eEKP-GK",
+          "code": "GK_Kompl",
+          "display": "Weitere Komplikationen"
+        }
+      ],
+      "text": "Weitere Komplikationen",
+      "required": false,
+      "repeats": false
+    }
+  ]
+}

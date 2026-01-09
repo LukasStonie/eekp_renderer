@@ -4,14 +4,21 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@element-plus/nuxt": "^1.1.4",
+    "axios": "^1.13.2",
+    "element-plus": "^2.13.1",
     "nuxt": "^4.2.2",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "cross-env": "^10.1.0"
   }
 }
