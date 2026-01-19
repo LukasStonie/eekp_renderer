@@ -1,5 +1,5 @@
 <template>
-    <el-form :model="form">
+    <el-form :model="form" label-position="top">
         <el-form-item
             v-for="item in questionaireData"
             :label="item.text"
