@@ -4,7 +4,7 @@ export default function (quest: any) {
     const description = quest.description
     const outer_item:[any] = quest.item
 
-    console.log('Parsed Questionaire:', {title, description, outer_item})
+    /* console.log('Parsed Questionaire:', {title, description, outer_item})*/
 
     return {
         title,

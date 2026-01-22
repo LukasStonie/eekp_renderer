@@ -2,8 +2,9 @@ import type { FormRules } from 'element-plus'
 
 export default function (questionaireItem: any) {
     console.log('Parsing Questionaire Rules')
+    console.log(questionaireItem)
 
-    const rules = reactive<FormRules>({})
+    const rules = reactive<FormRules<any>>({})
 
     // Iterate through each item in the questionaire
     questionaireItem.forEach((item: any) => {
@@ -19,12 +20,12 @@ export default function (questionaireItem: any) {
 
         // Check if the item is required
         if (item.required) {
-            currentRule.push({ required: true, message: `${text} is required`, trigger: 'change' })
+            currentRule.push({ required: true, message: `${text} ist verpflichtend`, trigger: 'change' })
         }
 
         // Check for maxLength constraint
         if (item.maxLength) {
-            currentRule.push({ max: item.maxLength, message: `${text} exceeds maximum length`, trigger: 'change' })
+            currentRule.push({ max: item.maxLength, message: `${text} ist länger als erwarter`, trigger: 'change' })
         }
 
         // Check for minValue and maxValue constraints in extensions
@@ -50,18 +51,20 @@ export default function (questionaireItem: any) {
             // Build rules based on found min and max values
             // if both are present
             if (minValue !== null && maxValue !== null) {
-                currentRule.push({ min: minValue, max: maxValue, message: `${text} must be between ${minValue} and ${maxValue}`, trigger: 'change' })
+                currentRule.push({ min: minValue, max: maxValue, message: `${text} muss zwischen ${minValue} und ${maxValue} sein`, trigger: 'change' })
             }
             // if only min is present
             else if (minValue !== null) {
-                currentRule.push({ min: minValue, message: `${text} must be at least ${minValue}`, trigger: 'change' })
+                currentRule.push({ min: minValue, message: `${text} muss größer als ${minValue} sein`, trigger: 'change' })
             }
             // if only max is present
             else if (maxValue !== null) {
-                currentRule.push({ max: maxValue, message: `${text} must be at most ${maxValue}`, trigger: 'change' })
+                currentRule.push({ max: maxValue, message: `${text} muss kleiner als ${maxValue} sein`, trigger: 'change' })
             }
         }
 
         rules[itemKey] = currentRule
     })
+    console.log(rules)
+    return rules
 }
