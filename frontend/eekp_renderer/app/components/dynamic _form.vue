@@ -33,24 +33,27 @@
 
                     <el-switch v-else-if="item.type === 'boolean'" v-model="form[item.linkId]" :disabled="item.readOnly"
                         inline-prompt active-text="Ja" inactive-text="Nein" />
-                    
-                <template #error="{ error }">
-  <div class="w-full flex mt-1">
-    
-    <div class="w-fit flex items-center text-rose-600 bg-rose-50 p-2 rounded border border-rose-100 shadow-sm">
-      
-      <svg class="h-4 w-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-      </svg>
-      
-      <span class="text-sm font-medium pr-1">
-        {{ error }}
-      </span>
-      
-    </div>
 
-  </div>
-</template>
+                    <template #error="{ error }">
+                        <div class="w-full flex mt-1">
+
+                            <div
+                                class="w-fit flex items-center text-rose-600 bg-rose-50 p-2 rounded border border-rose-100 shadow-sm">
+
+                                <svg class="h-4 w-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                <span class="text-sm font-medium pr-1">
+                                    {{ error }}
+                                </span>
+
+                            </div>
+
+                        </div>
+                    </template>
 
                 </el-form-item>
                 <el-form-item>

@@ -65,6 +65,5 @@ export default function (questionaireItem: any) {
 
         rules[itemKey] = currentRule
     })
-    console.log(rules)
     return rules
 }
