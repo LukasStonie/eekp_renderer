@@ -2,6 +2,13 @@
   <h1 class="text-4xl font-bold mb-4">Form Renderer</h1>
   <button class="bg-my-yellow-300 text-offblack font-bold py-2 px-4 rounded hover:bg-my-yellow-400"
     @click="checkAlive">Check Alive</button>
+
+  <el-form-item label="Select Questionaire">
+    <el-select v-model="selectedQuestionaire" placeholder="Select a questionaire" class="w-full">
+      <el-option v-for="q in questionaires" :key="q.url" :label="q.title" :value="q"></el-option>
+    </el-select>
+  </el-form-item>
+
   <h2 class="text-2xl font-semibold text-gray-700 mt-8 mb-4">{{ questionaire.title }}</h2>
   <p>{{ questionaire.description }}</p>
   <div class="grid grid-flow-col gap-3">
@@ -19,7 +26,6 @@
     </div>
   </div>
 
-  <!-- <Dynamic_form class="py-5" :questionaireData="questionaire.outer_item" /> -->
 </template>
 
 <script setup lang="ts">
@@ -47,13 +53,32 @@ const checkAlive = async () => {
   }
 }
 
+const questionaires = [
+  {url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/geburt-schwangere.json', title: 'Geburt Schwangere'},
+  {url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/geburt-kind.json', title: 'Geburt Kind'},
+  {url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/postpartale-periode.json', title: 'Postpartale Periode'},
+  {url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/kind-nach-geburt.json', title: 'Kind nach Geburt'},
+]
+const selectedQuestionaire = ref(questionaires[1])
+
 const questionaire = ref<{ title: string, description: string, outer_item: any }>({ title: '', description: '', outer_item: {} })
 onMounted(async () => {
   try {
-    const data = await $fetch('/api/questionaire_geburt')
+    const data = await $fetch(selectedQuestionaire.value.url)
     questionaire.value = parse_questionaire(data)
 
     console.log('Questionaire data:', questionaire.value.outer_item)
+  } catch (err) {
+    console.error('Fetch failed:', err)
+  }
+})
+
+
+watch(selectedQuestionaire, async (newVal) => {
+  try {
+    const data = await $fetch(newVal.url)
+    questionaire.value = parse_questionaire(data)
+    console.log('Selected Questionaire data:', questionaire.value.outer_item)
   } catch (err) {
     console.error('Fetch failed:', err)
   }
@@ -76,8 +101,6 @@ watch(questionaire, (newData) => {
   }
 })
 
-const submit = async () => {
-  console.log("Submitting")
-}
+
 
 </script>

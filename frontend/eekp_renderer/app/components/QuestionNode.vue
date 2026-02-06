@@ -1,9 +1,10 @@
 <template>
+    <h2 v-if="item.type === 'group'" class="text-1xl font-semibold text-gray-700 mt-8 mb-4">{{ item.text }}</h2>
     <el-form-item :prop="item.linkId" label-width="auto" 
-        v-if="isVisible">
+        v-if="isVisible && item.type !== 'group'" :style="indentStyle" style="max-width: 800px;">
         <template #label>
             <span class="inline-flex items-center gap-1">
-                <span>{{ item.text }}</span>
+                <span class="text-1xl font-semibold text-gray-700">{{ item.text }}</span>
 
                 <el-tooltip v-if="hint" :content="hint" placement="right">
                     <el-icon class="cursor-help text-blue-500">
@@ -21,25 +22,23 @@
         <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.linkId]" :disabled="item.readOnly"
             format="HH:mm" value-format="HH:mm" />
 
-        <el-input-number v-else-if="item.type === 'integer'" v-model="form[item.linkId]" :disabled="item.readOnly">
-            <template #suffix>{{ suffix }}</template>
-        </el-input-number>
+        <el-input-number v-else-if="item.type === 'integer'" v-model="form[item.linkId]" :disabled="item.readOnly"/>
 
-        <el-checkbox-group v-else-if="item.type === 'choice' && item.repeats && selectionType === 'check-box'" v-model="form[item.linkId]"
+        <el-checkbox-group v-else-if="item.type === 'choice' && selectionType === 'check-box'" v-model="form[item.linkId]"
             :disabled="item.readOnly">
             <el-checkbox v-for="option in item.answerOption" :value="option.valueCoding.code">
                 {{ option.valueCoding.display }}
             </el-checkbox>
         </el-checkbox-group>
 
-        <el-radio-group v-else-if="item.type === 'choice' && !item.repeats && selectionType === 'radio-button'" v-model="form[item.linkId]"
+        <el-radio-group v-else-if="item.type === 'choice' && selectionType === 'radio-button'" v-model="form[item.linkId]"
             :disabled="item.readOnly">
             <el-radio v-for="option in item.answerOption" :value="option.valueCoding.code">
                 {{ option.valueCoding.display }}
             </el-radio>
         </el-radio-group>
 
-        <el-select v-else-if="item.type === 'choice' && item.repeats && selectionType === 'drop-down'" v-model="form[item.linkId]"
+        <el-select v-else-if="item.type === 'choice' && selectionType === 'drop-down'" v-model="form[item.linkId]"
             :disabled="item.readOnly" placeholder="Bitte auswählen">
             <el-option v-for="option in item.answerOption" :key="option.valueCoding.code"
                 :label="option.valueCoding.display" :value="option.valueCoding.code" />
@@ -49,11 +48,12 @@
             inline-prompt active-text="Ja" inactive-text="Nein" />
 
         <p v-else>Not supported type: {{ item.type }} {{ item.repeats }} {{ selectionType }}</p>
+        <span v-if="suffix" class="unit-addon">{{ suffix }}</span>
     </el-form-item>
-    <QuestionNode v-for="subItem in subItems" :key="subItem.linkId" :item="subItem" :form="form"  />
+    
+    <QuestionNode v-for="subItem in subItems" :key="subItem.linkId" :item="subItem" :form="form" :level="props.level + 1" />
 
 
-    <!-- <p v-for="value in subItems.item">value</p> -->
 
 </template>
 
@@ -68,6 +68,23 @@ const subItems = ref<any>(null);
 const hint = ref<string>("");
 const suffix = ref<String|null>(null)
 const selectionType = ref<String|null>(null)
+const indentStyle = computed(() => {
+    if (props.level === undefined) {
+        return {};
+    }
+    else if (props.item.type === 'group') {
+        return {
+            'margin-left': `${(props.level+1) * 20}px`,
+            'border-left': '2px solid #3e65b3',
+            'padding-left': '10px',
+        }
+    }
+    else {
+        return {
+            'margin-left': `${(props.level) * 20}px`,
+        }
+    }
+});
 
 watch(() => props.item, (newItem) => {
     if (newItem?.extension) {

@@ -9,4 +9,5 @@ services:
       - 8000
     volumes:
       - ../frontend/:/var/www/html/app
+      - /var/www/html/app/eekp_renderer/node_modules
     tty: true
