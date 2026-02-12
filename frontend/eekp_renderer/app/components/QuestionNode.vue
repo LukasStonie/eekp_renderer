@@ -22,18 +22,20 @@
         <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.linkId]" :disabled="item.readOnly"
             format="HH:mm" value-format="HH:mm" />
 
-        <el-input-number v-else-if="item.type === 'integer'" v-model="form[item.linkId]" :disabled="item.readOnly"/>
+        <el-input-number v-else-if="item.type === 'integer'" v-model.number="form[item.linkId]" :disabled="item.readOnly"/>
 
-        <el-checkbox-group v-else-if="item.type === 'choice' && selectionType === 'check-box'" v-model="form[item.linkId]"
+        <el-input-number v-else-if="item.type === 'decimal'" v-model.number="form[item.linkId]" :precision="2" :step="0.1" :disabled="item.readOnly"/>
+
+        <el-checkbox-group v-else-if="item.type === 'choice' && (item.repeats ||selectionType === 'check-box')" v-model="form[item.linkId]"
             :disabled="item.readOnly">
             <el-checkbox v-for="option in item.answerOption" :value="option.valueCoding.code">
                 {{ option.valueCoding.display }}
             </el-checkbox>
         </el-checkbox-group>
 
-        <el-radio-group v-else-if="item.type === 'choice' && selectionType === 'radio-button'" v-model="form[item.linkId]"
+        <el-radio-group v-else-if="item.type === 'choice'  && selectionType === 'radio-button'" v-model="form[item.linkId]"
             :disabled="item.readOnly">
-            <el-radio v-for="option in item.answerOption" :value="option.valueCoding.code">
+            <el-radio v-for="option in item.answerOption" :value="option.valueCoding.code ?? option.valueCoding.display">
                 {{ option.valueCoding.display }}
             </el-radio>
         </el-radio-group>
@@ -41,7 +43,7 @@
         <el-select v-else-if="item.type === 'choice' && selectionType === 'drop-down'" v-model="form[item.linkId]"
             :disabled="item.readOnly" placeholder="Bitte auswählen">
             <el-option v-for="option in item.answerOption" :key="option.valueCoding.code"
-                :label="option.valueCoding.display" :value="option.valueCoding.code" />
+                :label="option.valueCoding.display" :value="option.valueCoding.code ?? option.valueCoding.display" />
         </el-select>
 
         <el-switch v-else-if="item.type === 'boolean'" v-model="form[item.linkId]" :disabled="item.readOnly"
@@ -122,6 +124,9 @@ watch(() => props.item, (newItem) => {
 }, { immediate: true });
 
 
+
+
+
 const isVisible = computed(() => {
     if (props.item?.enableWhen) {
         return parse_enableWhen(props.item.enableWhen, props.form, props.item.enableBehavior);
@@ -129,6 +134,22 @@ const isVisible = computed(() => {
     return true;
 });
 
+
+watch(isVisible, (newVisibility) => {
+    if (!newVisibility) {
+        // When the question is hidden, reset its value in the flat form
+        console.log(`Cleaning up hidden field: ${props.item.linkId}`);
+        
+        // Use null or empty string depending on your FHIR requirement
+        // Setting it to undefined/null is usually best for the flat model
+        props.form[props.item.linkId] = undefined; 
+        
+        // If it's a checkbox/multi-select, you might want an empty array
+        if (props.item.repeats || props.item.type === 'choice' && selectionType.value === 'check-box') {
+            props.form[props.item.linkId] = [];
+        }
+    }
+});
 
 
 </script>

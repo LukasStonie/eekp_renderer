@@ -5,7 +5,7 @@ export default function (conditions: any, groundTruth: any, enableBehavior: stri
         let condition = {
             question: groundTruth[element.question],
             operator: element.operator,
-            answer: element.answerBoolean ?? element.answerDecimal ?? element.answerInteger ?? element.answerString ?? element.answerDate ?? element.answerTime ?? element.answerCoding.code ?? null
+            answer: element.answerBoolean ?? element.answerDecimal ?? element.answerInteger ?? element.answerString ?? element.answerDate ?? element.answerTime ?? element.answerCoding.code ?? element.answerCoding.display ?? null
         };
         conditions_arr.push(evaluateCondition(condition));
     });

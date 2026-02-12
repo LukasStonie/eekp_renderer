@@ -11,7 +11,11 @@ export default function parseQuestionaireFormBindings(questionaireItems: any[]) 
             // 1. Process the current item
             if (itemType === "integer") {
                 defaultValue = 0;
-            } else if (itemType === "string") {
+            } 
+            else if (itemType === "decimal") {
+                defaultValue = 0.00;
+            }
+            else if (itemType === "string") {
                 defaultValue = '';
             } else if (itemType === "choice") {
                 defaultValue = item.repeats ? [] : '';
@@ -20,7 +24,7 @@ export default function parseQuestionaireFormBindings(questionaireItems: any[]) 
             } else if (itemType === "time") {
                 defaultValue = "12:00";
             } else if (itemType === "boolean") {
-                defaultValue = false;
+                defaultValue = undefined;
             }
 
             // Assign the value if a key exists

@@ -6,64 +6,72 @@ export default function (questionaireItem: any) {
 
     const rules = reactive<FormRules<any>>({})
 
-    // Iterate through each item in the questionaire
-    questionaireItem.forEach((item: any) => {
+    const walk = (items: any[]) => {
+        items.forEach((item: any) => {
+            const itemKey = item.linkId;
+            const text = item.text;
+            let currentRule = [];
 
-        // Extract relevant properties
-        const itemKey = item.linkId
-        const text = item.text
+            // 1. Determine the expected type based on the FHIR item type
+            // Element Plus / async-validator needs this to avoid the "is not a string" error
+            let validatorType: 'string' | 'number' | 'array' | 'boolean' = 'string';
 
-        // Define temporary rule array
-        let currentRule = []
+            if (item.type === 'integer' || item.type === 'decimal') validatorType = 'number';
+            if (item.type === 'boolean') validatorType = 'boolean';
+            if (item.repeats) validatorType = 'array'; // if it's a checkbox group or multi-select
 
-        // Parse rules based on item properties
-
-        // Check if the item is required
-        if (item.required) {
-            currentRule.push({ required: true, message: `${text} ist verpflichtend`, trigger: 'change' })
-        }
-
-        // Check for maxLength constraint
-        if (item.maxLength) {
-            currentRule.push({ max: item.maxLength, message: `${text} ist länger als erwarter`, trigger: 'change' })
-        }
-
-        // Check for minValue and maxValue constraints in extensions
-        if (item.extension) {
-            
-            // Define min and max values
-            let minValue: number | null = null
-            let maxValue: number | null = null
-
-            // Check each extension for minValue and maxValue
-            item.extension?.forEach((ext: any) => {
-                const maxValuePresent = item.extension.some((e: any) => e.url.includes("maxValue"))
-                const minValuePresent = item.extension.some((e: any) => e.url.includes("minValue"))
-
-                if (minValuePresent) {
-                    minValue = ext.valueInteger
+            // 2. Add Required Rule
+            if (item.required) {
+                if (item.type === 'boolean') {
+                    currentRule.push({
+                        type: 'enum',
+                        enum: [true, false],
+                        required: true,
+                        message: `${text} ist verpflichtend`,
+                        trigger: 'change'
+                    });
                 }
-                else if (maxValuePresent) {
-                    maxValue = ext.valueInteger
+                else{
+                currentRule.push({
+                    type: validatorType,
+                    required: true,
+                    message: `${text} ist verpflichtend`,
+                    trigger: 'change'
+                });}
+            }
+
+            // 3. Add Range Rules (Numeric)
+            if (item.extension) {
+                const minExt = item.extension.find((e: any) => e.url.includes("minValue"));
+                const maxExt = item.extension.find((e: any) => e.url.includes("maxValue"));
+
+                const minV = minExt ? (minExt.valueInteger ?? minExt.valueDecimal) : null;
+                const maxV = maxExt ? (maxExt.valueInteger ?? maxExt.valueDecimal) : null;
+
+                if (minV !== null || maxV !== null) {
+                    currentRule.push({
+                        type: 'number' as const, // Explicitly force number validation
+                        min: minV !== null ? minV : undefined,
+                        max: maxV !== null ? maxV : undefined,
+                        message: `${text} muss zwischen ${minV ?? 0} und ${maxV ?? '∞'} sein`,
+                        trigger: 'change'
+                    });
                 }
-            })
+            }
+            // Assign the value if a key exists
+            if (itemKey) {
+                console.log(`Adding rules for ${itemKey}:`, currentRule)
+                rules[itemKey] = currentRule;
+            }
 
-            // Build rules based on found min and max values
-            // if both are present
-            if (minValue !== null && maxValue !== null) {
-                currentRule.push({ min: minValue, max: maxValue, message: `${text} muss zwischen ${minValue} und ${maxValue} sein`, trigger: 'change' })
-            }
-            // if only min is present
-            else if (minValue !== null) {
-                currentRule.push({ min: minValue, message: `${text} muss größer als ${minValue} sein`, trigger: 'change' })
-            }
-            // if only max is present
-            else if (maxValue !== null) {
-                currentRule.push({ max: maxValue, message: `${text} muss kleiner als ${maxValue} sein`, trigger: 'change' })
-            }
-        }
 
-        rules[itemKey] = currentRule
-    })
+            if (item.item && Array.isArray(item.item)) {
+                walk(item.item)
+            }
+        })
+    }
+
+    walk(questionaireItem)
+    console.log('Generated Rules:', rules)
     return rules
 }
