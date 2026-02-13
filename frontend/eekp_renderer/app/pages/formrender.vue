@@ -1,7 +1,13 @@
 <template>
-  <h1 class="text-4xl font-bold mb-4">Form Renderer</h1>
-  <button class="bg-my-yellow-300 text-offblack font-bold py-2 px-4 rounded hover:bg-my-yellow-400"
-    @click="checkAlive">Check Alive</button>
+  <div
+    class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gradient-blue-to-yellow content-center justify-center min-h-60 mb-5">
+    <div class="flex justify-start container mx-auto px-4">
+      <h2 class="text-6xl font-semibold text-gray-700">{{ questionaire.title }}</h2>
+    </div>
+
+  </div>
+
+  <p class="italic text-xl mb-5">{{ questionaire.description }}</p>
 
   <el-form-item label="Select Questionaire">
     <el-select v-model="selectedQuestionaire" placeholder="Select a questionaire" class="w-full">
@@ -9,60 +15,45 @@
     </el-select>
   </el-form-item>
 
-  <h2 class="text-2xl font-semibold text-gray-700 mt-8 mb-4">{{ questionaire.title }}</h2>
-  <p>{{ questionaire.description }}</p>
   <div class="grid grid-flow-col gap-3">
     <div class="col-span-1 ">
-      <el-form :model="form" :rules="rules" label-position="top" :key="selectedQuestionaire" ref="formRef">
+      <div class="mt-8 flex content-center justify-start mb-8">
+        <el-form :model="form" :rules="rules" label-position="top" :key="selectedQuestionaire" ref="formRef"
+          max-width="300px" size="default">
 
-        <QuestionNode v-for="rootItem in questionaire.outer_item" :key="rootItem.linkId" :item="rootItem" :form="form"
-          :level="0" />
+          <QuestionNode v-for="rootItem in questionaire.outer_item" :key="rootItem.linkId" :item="rootItem" :form="form"
+            :level="0" />
 
-        <el-button type="primary" @click="submit">Submit</el-button>
-      </el-form>
-    </div>
-    <div class="bg-red-100 col-span-1 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
-      <h3 class="font-bold mb-2">Form Data Preview:</h3>
-      <pre class="text-xs">{{ response }}</pre>
-      <pre class="text-xs">{{ form }}</pre>
+          <el-button color="#FBEF7A" size="large" @click="submit">Submit</el-button>
+        </el-form>
+      </div>
     </div>
   </div>
-
+  <div class="bg-red-100 col-span-1 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
+    <h3 class="font-bold mb-2">Form Data Preview:</h3>
+    <pre class="text-xs">{{ response }}</pre>
+    <pre class="text-xs">{{ form }}</pre>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import Dynamic_form from '~/components/dynamic _form.vue'
 import QuestionNode from '~/components/QuestionNode.vue'
 import { mapToFhirResponse } from '~/utils/export_fhir'
 import parse_questionaire from '~/utils/parse_questionaire'
 import parse_questionaire_rules from '~/utils/parse_questionaire_rules'
 
 
-
-const checkAliveSuccess = ref('red')
-
-
-const checkAlive = async () => {
-  try {
-    const data = await $fetch('/api/alive')
-
-    console.log('Alive status:', data)
-    checkAliveSuccess.value = 'green'
-
-    console.log('Form Ref Status:', formRef.value)
-
-  } catch (err) {
-    console.error('Fetch failed:', err)
-    checkAliveSuccess.value = 'red'
-  }
-}
-
 const questionaires = [
-  { url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/geburt-schwangere.json', title: 'Geburt Schwangere' },
-  { url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/geburt-kind.json', title: 'Geburt Kind' },
-  { url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/postpartale-periode.json', title: 'Postpartale Periode' },
-  { url: 'https://dev.elga.gv.at/apis/eekp-fhir-anbindung/v0.1.0/reference/static/kind-nach-geburt.json', title: 'Kind nach Geburt' },
+  { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Geburt_Schwangere.R4.json', title: 'Geburt Schwangere' },
+  { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Das-Neugeborene-nach-der-Geburt.R4.json', title: 'Geburt Kind' },
+  { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Postpartale-Periode.R4.json', title: 'Postpartale Periode' },
+  { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Zustand-des-Kindes-bei-Entlassung_Transfer.R4.json', title: 'Zustand des Kindes bei Entlassung/Transfer' },
+  // { url: 'questionaires/V3_Das-Neugeborene-nach-der-Geburt.R4.json', title: 'Kind nach Geburt (File)' },
+  // { url: 'questionaires/V3_Geburt_Kind.R4.json', title: 'Geburt Kind (File)' },
+  // { url: 'questionaires/V3_Geburt_Schwangere.R4.json', title: 'Geburt Schwangere (File)' },
+  // { url: 'questionaires/V3_Postpartale-Periode.R4.json', title: 'Postpartale Periode (File)' },
+  // { url: 'questionaires/V3_Zustand-des-Kindes-bei-Entlassung_Transfer.R4.json', title: 'Kind bei Entlassung/Transfer (File)' },
 ]
 const selectedQuestionaire = ref(questionaires[0]?.url)
 
@@ -71,9 +62,19 @@ watch(selectedQuestionaire, async (newUrl) => {
   if (!newUrl) return
 
   try {
-    const data = await $fetch(newUrl)
-    // This will trigger the watch(questionaire) below
-    questionaire.value = parse_questionaire(data)
+    if (!newUrl?.startsWith('https')) {
+      console.log('Fetching from file API for URL:', newUrl)
+      const data = await $fetch('/api/questionaire_file', { query: { file: newUrl } })
+      console.log('Fetched from file API:', data)
+      questionaire.value = parse_questionaire(data)
+    }
+    else {
+      console.log('Fetching from URL:', newUrl)
+      const data = await $fetch(newUrl)
+      // This will trigger the watch(questionaire) below
+      questionaire.value = parse_questionaire(data)
+    }
+
   } catch (err) {
     console.error('Fetch failed:', err)
   }
@@ -134,7 +135,7 @@ const submit = async () => {
 
   } catch (error) {
     console.error("Validation failed or mapping error:", error);
-    ElMessage.error({message: 'Die Validierung ist fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', placement: 'top-right', duration:0, showClose: true});
+    ElMessage.error({ message: 'Die Validierung ist fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', placement: 'top-right', duration: 0, showClose: true });
     // Element Plus will automatically show the red error messages
   }
 };

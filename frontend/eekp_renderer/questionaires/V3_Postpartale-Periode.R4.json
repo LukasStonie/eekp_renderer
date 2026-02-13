@@ -1,0 +1,642 @@
+{
+  "resourceType": "Questionnaire",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/4.0/StructureDefinition/Questionnaire"
+    ]
+  },
+  "url": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+  "title": "Postpartale Periode",
+  "status": "draft",
+  "description": "Fragebogen zur Erfassung der Geburt - Postpartale Periode",
+  "purpose": "Als Schnittstellenbeschreibung für die Implementierung von Erfassungstools",
+  "item": [
+    {
+      "type": "string",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "PP"
+          }
+        }
+      ],
+      "linkId": "572614265985",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP",
+          "display": "Fachidentifikator"
+        }
+      ],
+      "text": "Fachidentifikator"
+    },
+    {
+      "type": "date",
+      "linkId": "7315290257736",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_DatG1C",
+          "display": "Datum der Untersuchung"
+        }
+      ],
+      "text": "Datum der Untersuchung",
+      "required": true,
+      "repeats": false,
+      "readOnly": false
+    },
+    {
+      "type": "date",
+      "linkId": "145629352748",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_DatG1CUeb",
+          "display": "Datum der Daten-Übermittlung"
+        }
+      ],
+      "text": "Datum der Daten-Übermittlung",
+      "readOnly": true
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "type": "string",
+              "maxLength": 250,
+              "linkId": "376890163158",
+              "code": [
+                {
+                  "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+                  "code": "PP_WocBetWarSonst",
+                  "display": "Sonstiges"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "74964007",
+                  "display": "Other (qualifier value)"
+                }
+              ],
+              "text": "Sonstiges",
+              "enableWhen": [
+                {
+                  "question": "276775940606",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://snomed.info/sct",
+                    "code": "74964007",
+                    "display": "Sonstiges"
+                  }
+                }
+              ],
+              "enableBehavior": "any",
+              "required": true,
+              "repeats": false
+            }
+          ],
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "276775940606",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+              "code": "PP_WocBetWar"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "597951000005108",
+              "display": "Puerperium observable (observable entity)"
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "291248735323",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "263654008",
+                "display": "Auffällig"
+              }
+            }
+          ],
+          "enableBehavior": "any",
+          "required": true,
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "237348005",
+                "display": "Fieber p.p. > 2 Tage über 38,5°C"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "47821001",
+                "display": "postpartale Blutung über 1000 ml"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "10755001000119100",
+                "display": "Stimmung (z.B. postpartale Krisen, Stimmungsschwankungen)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "10755381000119108",
+                "display": "Anämie Hb < 10 gldl (6,2 mmol/l)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "116859006",
+                "display": "Gabe von Blutkonserven"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "74964007",
+                "display": "Sonstiges"
+              }
+            }
+          ]
+        }
+      ],
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "radio-button",
+                "display": "Radio Button"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "291248735323",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_WocBet",
+          "display": "Wochenbett"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169784003",
+          "display": "Postnatal examination normal (finding)"
+        }
+      ],
+      "text": "Wochenbett",
+      "required": true,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "597961000005105",
+            "display": "Unauffällig"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "263654008",
+            "display": "Auffällig"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "integer",
+          "maxLength": 3,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "mm[Hg]",
+                "display": "millimeter of mercury"
+              }
+            }
+          ],
+          "linkId": "2933380495209",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+              "code": "PP_BlutdSys",
+              "display": "SYS (mmHg)"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "271649006",
+              "display": "Systolic blood pressure (observable entity)"
+            }
+          ],
+          "text": "SYS (mmHg)",
+          "required": false,
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "2933380495209_helpText",
+              "type": "display",
+              "text": "Blutdruck systolisch ",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "integer",
+          "maxLength": 3,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "mm[Hg]",
+                "display": "millimeter of mercury"
+              }
+            }
+          ],
+          "linkId": "3027932868770",
+          "code": [
+            {
+              "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+              "code": "PP_BlutdDia",
+              "display": "DIA (mmHg)"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "271650006",
+              "display": "Diastolic blood pressure (observable entity)"
+            }
+          ],
+          "text": "DIA (mmHg)",
+          "required": false,
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "3027932868770_helpText",
+              "type": "display",
+              "text": "Blutdruck diastolisch",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "help",
+                        "display": "Help-Button"
+                      }
+                    ],
+                    "text": "Help-Button"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "type": "group",
+      "linkId": "742102561053",
+      "code": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "75367002",
+          "display": "Blood pressure (observable entity)"
+        }
+      ],
+      "text": "Blutdruck <6h nach Geburt"
+    },
+    {
+      "type": "integer",
+      "maxLength": 3,
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "system": "http://unitsofmeasure.org",
+            "code": "/min",
+            "display": "per minute"
+          }
+        }
+      ],
+      "linkId": "714888209379",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_Puls",
+          "display": "Puls (bpm)"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "8499008",
+          "display": "Pulse, function (observable entity)"
+        }
+      ],
+      "text": "Puls (bpm)",
+      "required": false,
+      "repeats": false
+    },
+    {
+      "type": "date",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "2449067404163",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_EntlAm",
+          "display": "Mutter entlassen am"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "308283009",
+          "display": "Discharge from hospital (procedure)"
+        }
+      ],
+      "text": "Mutter entlassen am",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "time",
+      "linkId": "499910152268",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_EntlUm",
+          "display": "[Wenn Mutter und Kind unauffällig entlassen] Am"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "442864001",
+          "display": "Date of discharge (observable entity)"
+        }
+      ],
+      "text": "Mutter entlassen um",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "boolean",
+      "linkId": "981569052073",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_AntDPropJa",
+          "display": "Anti-D-Prophylaxe erfolgt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "1222880007",
+          "display": "Human anti-D immunoglobulin administered (situation)"
+        }
+      ],
+      "text": "Anti-D-Prophylaxe erfolgt",
+      "required": true,
+      "repeats": false,
+      "item": [
+        {
+          "linkId": "981569052073_helpText",
+          "type": "display",
+          "text": "vorsorgliche Spritze, um Probleme mit dem Rhesusfaktor im Blut zu verhindern verabreicht (Anti-D-Prophylaxe)",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "linkId": "332565498031",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_MasMumRoetImp",
+          "display": "Masern-Mumps-Röteln-Impfung erfolgt"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "150971000119104",
+          "display": "Measles, mumps and rubella vaccination given (situation)"
+        }
+      ],
+      "text": "Masern-Mumps-Röteln-Impfung erfolgt",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "524359641559",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_HebNachSorg",
+          "display": "Hebammennachsorge"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "305586001",
+          "display": "Under care of midwife (finding)"
+        }
+      ],
+      "text": "Hebammennachsorge",
+      "required": false,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "897015005",
+            "display": "empfohlen"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "305587005",
+            "display": "vorhanden"
+          }
+        }
+      ],
+      "item": [
+        {
+          "linkId": "524359641559_helpText",
+          "type": "display",
+          "text": "Wochenbett-Betreuung durch eine Hebamme (Hebammennachsorge)",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "maxLength": 750,
+      "linkId": "701547860244",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_WeitEint",
+          "display": "Weitere Eintragungen"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "866145009",
+          "display": "General patient record note (record artifact)"
+        }
+      ],
+      "text": "Weitere Eintragungen",
+      "required": false,
+      "repeats": false
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "264211070287",
+      "code": [
+        {
+          "system": "https://fhir.hl7.at/eekp/Questionnaire/PP",
+          "code": "PP_GynPostKon"
+        }
+      ],
+      "required": false,
+      "repeats": false,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Gynäkologische postpartale Kontrolle empfohlen"
+          }
+        }
+      ],
+      "item": [
+        {
+          "linkId": "264211070287_helpText",
+          "type": "display",
+          "text": "Frauenärztliche Kontrolle nach der Geburt empfohlen.",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "help",
+                    "display": "Help-Button"
+                  }
+                ],
+                "text": "Help-Button"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,25 +1,27 @@
 /* assets/css/main.css */
-html.body, body {
+html.body,
+body {
   /* 1. The Main Accent Color (Button default, active links, etc.) */
   /* Using your banana-cream-600 or 500 */
-  --el-color-primary: #c5b207; 
+  --el-color-primary: #8F8840;
 
   /* 2. The Hover/Active States (CRITICAL) */
   /* Element Plus calculates these automatically in JS, but CSS overrides require manual values. */
   /* If you don't set these, hover states might look weird/blue-ish. */
-  
-  --el-color-primary-light-3: #faeb6b; /* banana-cream-300 (Hover) */
-  --el-color-primary-light-5: #fbf29d; /* banana-cream-200 */
-  --el-color-primary-light-7: #fdf8ce; /* banana-cream-100 */
-  --el-color-primary-light-8: #fefce6; /* banana-cream-50 */
-  --el-color-primary-light-9: #fefce6; /* Ultra light background for plain buttons */
-  
-  --el-color-primary-dark-2: #948505;  /* banana-cream-700 (Active/Click) */
-}
 
-.something-unreal {
-    background-color: red;
-    border:#948505 
+  --el-color-primary-light-3: #faeb6b;
+  /* banana-cream-300 (Hover) */
+  --el-color-primary-light-5: #fbf29d;
+  /* banana-cream-200 */
+  --el-color-primary-light-7: #fdf8ce;
+  /* banana-cream-100 */
+  --el-color-primary-light-8: #fefce6;
+  /* banana-cream-50 */
+  --el-color-primary-light-9: #fefce6;
+  /* Ultra light background for plain buttons */
+
+  --el-color-primary-dark-2: #F3DD07;
+  /* banana-cream-700 (Active/Click) */
 }
 
 .unit-addon {
@@ -36,3 +38,9 @@ html.body, body {
   white-space: nowrap;
   height: 32px;
 }
+
+.bg-gradient-blue-to-yellow {
+  background: #FBEF7A;
+  background: linear-gradient(90deg, rgba(251, 239, 122, 1) 60%, rgba(170, 214, 244, 1) 100%);
+}
+
