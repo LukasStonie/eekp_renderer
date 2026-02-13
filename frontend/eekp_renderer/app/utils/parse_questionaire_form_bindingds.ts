@@ -22,7 +22,7 @@ export default function parseQuestionaireFormBindings(questionaireItems: any[]) 
             } else if (itemType === "date") {
                 defaultValue = new Date().toISOString().split('T')[0];
             } else if (itemType === "time") {
-                defaultValue = "12:00";
+                defaultValue = "12:00:00";
             } else if (itemType === "boolean") {
                 defaultValue = undefined;
             }
