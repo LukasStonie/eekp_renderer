@@ -8,7 +8,11 @@ export default defineEventHandler(async (event) => {
 
     const p12Path = config.keystorePath
     const caPath = config.truststorePath
+    const base = config.public.eekpBase
+    const endpoint = config.public.eekpAliveEndpoint
 
+    console.log('Using Endpoint:', base)
+    console.log("Endpoint Path:", endpoint)
    
     const httpsAgent = new https.Agent({
         pfx: fs.readFileSync(p12Path),
@@ -20,7 +24,7 @@ export default defineEventHandler(async (event) => {
     })
 
     try {
-        const response = await axios.get(`https://zgf1.k1.elga.dxc-austria.at/pineit/pitaccess-eoas/healthz/alive`, {
+        const response = await axios.get(`${base}${endpoint}`, {
             httpsAgent,
             headers: {
             'Accept': 'application/fhir+json'

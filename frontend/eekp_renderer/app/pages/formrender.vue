@@ -49,11 +49,6 @@ const questionaires = [
   { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Das-Neugeborene-nach-der-Geburt.R4.json', title: 'Geburt Kind' },
   { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Postpartale-Periode.R4.json', title: 'Postpartale Periode' },
   { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Zustand-des-Kindes-bei-Entlassung_Transfer.R4.json', title: 'Zustand des Kindes bei Entlassung/Transfer' },
-  // { url: 'questionaires/V3_Das-Neugeborene-nach-der-Geburt.R4.json', title: 'Kind nach Geburt (File)' },
-  // { url: 'questionaires/V3_Geburt_Kind.R4.json', title: 'Geburt Kind (File)' },
-  // { url: 'questionaires/V3_Geburt_Schwangere.R4.json', title: 'Geburt Schwangere (File)' },
-  // { url: 'questionaires/V3_Postpartale-Periode.R4.json', title: 'Postpartale Periode (File)' },
-  // { url: 'questionaires/V3_Zustand-des-Kindes-bei-Entlassung_Transfer.R4.json', title: 'Kind bei Entlassung/Transfer (File)' },
 ]
 const selectedQuestionaire = ref(questionaires[0]?.url)
 

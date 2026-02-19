@@ -1,3 +1,5 @@
+import { env } from "node:process";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
@@ -17,6 +19,12 @@ export default defineNuxtConfig({
     keystorePassword: 'Schokolade1411!',
     truststorePath: 'certs/server-ca.pem',
     birthQuestionairePath: 'questionaires/put_geburt.json',
+    public: {
+      // Diese Werte sind auch client-seitig verfügbar (unsicher)
+      eekpBase: env.EEKP_BASE,
+      eekpAliveEndpoint: env.ALIVE_ENDPOINT,
+      eekpFindDocumentReferenceEndpoint: env.FIND_DOCUMENT_REFERENCE_ENDPOINT,
+    }
   },
   vite: {
     server: {
