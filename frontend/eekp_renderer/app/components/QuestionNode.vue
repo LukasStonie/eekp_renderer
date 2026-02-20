@@ -39,14 +39,17 @@
             v-model="form[item.linkId]" :disabled="item.readOnly" size="default" fill="#FBEF7A" text-color="#030301">
             <el-radio-button v-for="option in item.answerOption"
                 :value="option.valueCoding.code ?? option.valueCoding.display" :label="option.valueCoding.display" />
+            <el-radio-button :value="''">Nicht gesetzt</el-radio-button>
         </el-radio-group>
-        
+
         <el-select v-else-if="item.type === 'choice' && selectionType === 'drop-down'" v-model="form[item.linkId]"
             :disabled="item.readOnly" placeholder="Bitte auswählen">
+            <el-option label="Nicht gesetzt" :value="''" />
             <el-option v-for="option in item.answerOption" :key="option.valueCoding.code"
                 :label="option.valueCoding.display" :value="option.valueCoding.code ?? option.valueCoding.display" />
         </el-select>
-        <el-button v-else-if="item.type === 'choice' && selectionType === 'drop-down'" type="danger" :icon="ElIconDelete" circle class="ml-2" />
+
+
 
         <!-- <el-switch v-else-if="item.type === 'boolean'" v-model="form[item.linkId]" :disabled="item.readOnly"
             inline-prompt active-text="Ja" inactive-text="Nein" /> -->
@@ -57,14 +60,14 @@
             <el-radio-button :value="false">Nein</el-radio-button>
             <el-radio-button :value="undefined">Nicht gesetzt</el-radio-button>
         </el-radio-group>
-        
+
 
         <p v-else>Not supported type: {{ item.type }} {{ item.repeats }} {{ selectionType }}</p>
         <span v-if="suffix" class="unit-addon">{{ suffix }}</span>
 
         <el-checkbox v-if="item?.readOnly !== undefined" class="ml-3" v-model="item.readOnly" label="Readonly"
             size="small" />
-        
+
     </el-form-item>
 
     <QuestionNode v-for="subItem in subItems" :key="subItem.linkId" :item="subItem" :form="form"
@@ -77,6 +80,7 @@
 import { computed } from 'vue'
 import parse_enableWhen from '../utils/parse_enableWhen';
 import { get } from 'node:http';
+import { el } from 'element-plus/es/locales.mjs';
 
 const props = defineProps(['item', 'form', 'level'])
 

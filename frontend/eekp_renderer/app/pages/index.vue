@@ -1,32 +1,22 @@
 <template>
-  <h1>Index page</h1>
-  <p>Welcome to the index page!</p>
+  <header-section text="ElternKindPass" />
   <div class="flex gap-4 pt-4">
-      <button 
-        @click="checkAlive"
-        class="px-6 py-2 bg-yellow-500 text-black font-medium rounded-md shadow-md hover:bg-yellow-600 transition-colors duration-200 active:transform active:scale-95"
-      >
-        Check Alive
-      </button>
-
-      <button 
-        @click="checkDocumentReferences"
-        class="px-6 py-2 bg-yellow-500 text-black font-medium rounded-md shadow-md hover:bg-yellow-600 transition-colors duration-200 active:transform active:scale-95"
-      >
-        Check Document References
-      </button>
-
-      <NuxtLink 
-        to="/formrender" 
-        class="px-6 py-2 bg-gray-100 text-gray-700 font-medium rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200"
-      >
-        Go to Form Renderer
-      </NuxtLink>
-    </div>
+    <el-button @click="checkAlive" color="#FBEF7A" size="large">
+      Check Alive
+    </el-button>
+    <!-- <el-input v-model="token" placeholder="Alive Status" class="w-16" /> -->
+    <el-button @click="checkDocumentReferences" color="#FBEF7A" size="large">
+      Check Document References
+    </el-button>
+    <el-button tag="router-link" to="/formrender" color="#FBEF7A" size="large">Go to Form Renderer</el-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import HeaderSection from '~/components/HeaderSection.vue'
+
 const checkAliveSuccess = ref('red')
+const token = ref("")
 
 
 const checkAlive = async () => {
@@ -44,7 +34,7 @@ const checkAlive = async () => {
 
 const checkDocumentReferences = async () => {
   try {
-    const data = await $fetch('/api/findDocumentReferences')
+    const data = await $fetch('/api/document_references', { body: { token: token.value } })
 
     console.log('Document References status:', data)
   } catch (err) {

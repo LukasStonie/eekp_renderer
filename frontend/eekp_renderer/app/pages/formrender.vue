@@ -1,13 +1,10 @@
 <template>
-  <div
-    class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gradient-blue-to-yellow content-center justify-center min-h-60 mb-5">
-    <div class="flex justify-start container mx-auto px-4">
-      <h2 class="text-6xl font-semibold text-gray-700">{{ questionaire.title }}</h2>
-    </div>
 
-  </div>
+  <header-section :text="questionaire.title" />
+
 
   <p class="italic text-xl mb-5">{{ questionaire.description }}</p>
+
 
   <el-form-item label="Select Questionaire">
     <el-select v-model="selectedQuestionaire" placeholder="Select a questionaire" class="w-full">
@@ -15,8 +12,20 @@
     </el-select>
   </el-form-item>
 
-  <div class="grid grid-flow-col gap-3">
-    <div class="col-span-1 ">
+
+  <div class="fixed bottom-6 right-6 z-50">
+    <el-tooltip content="Toggle Expert Mode - shows form data and FHIR response preview" placement="top">
+      <el-button type="primary" size="large" circle color="#FBEF7A" class="fab-shadow !w-14 !h-14 !text-xl"
+        @click="expertMode = !expertMode">
+        <el-icon>
+          <ElIconDocument />
+        </el-icon>
+      </el-button>
+    </el-tooltip>
+  </div>
+
+  <div class="grid grid-cols-4 gap-3">
+    <div class="col-span-2 ">
       <div class="mt-8 flex content-center justify-start mb-8">
         <el-form :model="form" :rules="rules" label-position="top" :key="selectedQuestionaire" ref="formRef"
           max-width="300px" size="default">
@@ -28,21 +37,25 @@
         </el-form>
       </div>
     </div>
-  </div>
-  <div class="bg-red-100 col-span-1 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
-    <h3 class="font-bold mb-2">Form Data Preview:</h3>
-    <pre class="text-xs">{{ response }}</pre>
-    <pre class="text-xs">{{ form }}</pre>
+    <div v-if="expertMode"
+      class="bg-white col-span-2 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
+      <h3 class="font-bold mb-2">Questionaire Response Preview:</h3>
+      <pre class="text-xs">{{ response }}</pre>
+      <h3 class="font-bold mb-2">Form Data Preview:</h3>
+      <pre class="text-xs">{{ form }}</pre>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import QuestionNode from '~/components/QuestionNode.vue'
+import HeaderSection from '~/components/HeaderSection.vue'
 import { mapToFhirResponse } from '~/utils/export_fhir'
 import parse_questionaire from '~/utils/parse_questionaire'
 import parse_questionaire_rules from '~/utils/parse_questionaire_rules'
 
+const expertMode = ref(false)
 
 const questionaires = [
   { url: 'https://dev.elga.gv.at//apis/eekp-fhir-anbindung/v0.1.0/reference/static/V3_Geburt_Schwangere.R4.json', title: 'Geburt Schwangere' },
@@ -105,6 +118,20 @@ watch(questionaire, async (newData) => {
   }
 })
 
+watch(form, (newForm) => {
+  console.log('Form data updated:', newForm)
+  const questionnaireResponse = {
+    resourceType: "QuestionnaireResponse",
+    status: "completed",
+    questionnaire: selectedQuestionaire.value, // The URL
+    authored: new Date().toISOString(),
+    item: mapToFhirResponse(questionaire.value.outer_item, form.value)
+  };
+
+  console.log("Final FHIR Resource:", questionnaireResponse);
+  response.value = questionnaireResponse;
+}, { deep: true })
+
 const response = ref<any>(null)
 const submit = async () => {
   if (!formRef.value) return;
@@ -131,7 +158,6 @@ const submit = async () => {
   } catch (error) {
     console.error("Validation failed or mapping error:", error);
     ElMessage.error({ message: 'Die Validierung ist fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', placement: 'top-right', duration: 0, showClose: true });
-    // Element Plus will automatically show the red error messages
   }
 };
 
