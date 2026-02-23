@@ -34,7 +34,7 @@ const checkAlive = async () => {
 
 const checkDocumentReferences = async () => {
   try {
-    const data = await $fetch('/api/document_references', { body: { token: token.value } })
+    const data = await $fetch('/api/document_references')
 
     console.log('Document References status:', data)
   } catch (err) {
