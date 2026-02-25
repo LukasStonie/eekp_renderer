@@ -3,7 +3,6 @@ import fs from 'node:fs'
 import axios from 'axios'
 
 export default defineEventHandler(async (event) => {
-    console.log('Questionaire called')
     const config = useRuntimeConfig()
     const questionairePath = config.birthQuestionairePath
 

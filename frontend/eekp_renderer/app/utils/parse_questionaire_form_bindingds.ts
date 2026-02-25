@@ -1,5 +1,6 @@
 export default function parseQuestionaireFormBindings(questionaireItems: any[]) {
     const values = reactive<any>({})
+    values['identifier'] = undefined
 
     // Define a helper function to perform the recursion
     const walk = (items: any[]) => {
@@ -8,24 +9,23 @@ export default function parseQuestionaireFormBindings(questionaireItems: any[]) 
             const itemType = item.type
             let defaultValue = undefined
 
-            // 1. Process the current item
-            if (itemType === "integer") {
-                defaultValue = 0;
-            } 
-            else if (itemType === "decimal") {
-                defaultValue = 0.00;
-            }
-            else if (itemType === "string") {
-                defaultValue = '';
-            } else if (itemType === "choice") {
-                defaultValue = item.repeats ? [] : '';
-            } else if (itemType === "date") {
-                defaultValue = new Date().toISOString().split('T')[0];
-            } else if (itemType === "time") {
-                defaultValue = "12:00:00";
-            } else if (itemType === "boolean") {
-                defaultValue = undefined;
-            }
+            // if (itemType === "integer") {
+            //     defaultValue = 0;
+            // } 
+            // else if (itemType === "decimal") {
+            //     defaultValue = 0.00;
+            // }
+            // else if (itemType === "string") {
+            //     defaultValue = '';
+            // } else if (itemType === "choice") {
+            //     defaultValue = item.repeats ? [] : '';
+            // } else if (itemType === "date") {
+            //     defaultValue = new Date().toISOString().split('T')[0];
+            // } else if (itemType === "time") {
+            //     defaultValue = "12:00:00";
+            // } else if (itemType === "boolean") {
+            //     defaultValue = undefined;
+            // }
 
             // Assign the value if a key exists
             if (itemKey) {

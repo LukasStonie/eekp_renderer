@@ -4,7 +4,6 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid';
 
 export default defineEventHandler(async (event) => {
-    console.log('HCP Assertion called')
     const config = useRuntimeConfig()
 
     const p12Path = config.keystorePath
@@ -27,9 +26,7 @@ export default defineEventHandler(async (event) => {
             'Accept': 'application/fhir+json'
             }
         })
-
-        // 3. JSON an das Nuxt Frontend zurückgeben
-        console.log('Proxy Response Status:', response.status)
+        
         return response.data
 
     } catch (error) {

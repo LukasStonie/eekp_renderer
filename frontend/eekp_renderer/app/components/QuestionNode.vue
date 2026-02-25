@@ -4,7 +4,7 @@
         style="max-width: 800px;">
         <template #label>
             <span class="inline-flex items-center gap-1">
-                <span class="text-1xl font-semibold text-gray-700">{{ item.text }} ({{ item.linkId }})</span>
+                <span class="text-1xl font-semibold text-gray-700">{{ item.text }}</span>
 
                 <el-tooltip v-if="hint" :content="hint" placement="right">
                     <el-icon class="cursor-help text-blue-500">
@@ -109,11 +109,9 @@ const indentStyle = computed(() => {
 
 watch(() => props.item, (newItem) => {
     if (newItem?.extension) {
-        console.log("Looking for suffix in", newItem.extension)
         let coding = newItem.extension?.find((ext: any) => ext?.valueCoding?.display);
         if (coding && coding?.valueCoding?.display) {
             suffix.value = coding.valueCoding.display;
-            console.log("Found suffix:", suffix.value)
         }
 
         let selectionTypeExt = newItem.extension?.find((ext: any) => ext.url === "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl");
@@ -157,7 +155,6 @@ const isVisible = computed(() => {
 watch(isVisible, (newVisibility) => {
     if (!newVisibility) {
         // When the question is hidden, reset its value in the flat form
-        console.log(`Cleaning up hidden field: ${props.item.linkId}`);
 
         // Use null or empty string depending on your FHIR requirement
         // Setting it to undefined/null is usually best for the flat model

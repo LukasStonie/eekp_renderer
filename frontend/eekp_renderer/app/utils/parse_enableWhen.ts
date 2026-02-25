@@ -1,6 +1,5 @@
 export default function (conditions: any, groundTruth: any, enableBehavior: string ) {
     let conditions_arr = [];
-    console.log("Parsing enableWhen conditions:", conditions);
     conditions.forEach(element => {
         let condition = {
             question: groundTruth[element.question],
@@ -9,15 +8,12 @@ export default function (conditions: any, groundTruth: any, enableBehavior: stri
         };
         conditions_arr.push(evaluateCondition(condition));
     });
-    console.log("conditions:", conditions_arr);
 
     if (enableBehavior === 'all') {
         const allTrue = conditions_arr.every(val => val === true);
-        console.log("All conditions met:", allTrue);
         return allTrue;
     } else if (enableBehavior === 'any') {
         const anyTrue = conditions_arr.some(val => val === true);
-        console.log("Any condition met:", anyTrue);
         return anyTrue;
     }
 }

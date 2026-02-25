@@ -7,7 +7,6 @@ export default defineEventHandler(async (event ) => {
     const query = getQuery(event)
     const fileName = query.file as string
 
-    console.log('Questionaire file called with file:', fileName)
 
     const questionaireContent = fs.readFileSync(fileName, 'utf-8')
     if (!questionaireContent) {

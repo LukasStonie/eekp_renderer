@@ -1,10 +1,16 @@
 import type { FormRules } from 'element-plus'
 
 export default function (questionaireItem: any) {
-    console.log('Parsing Questionaire Rules')
-    console.log(questionaireItem)
 
     const rules = reactive<FormRules<any>>({})
+    rules['identifier'] = [
+        {
+            type: 'string',
+            required: true,
+            message: 'Der Identifier ist verpflichtend',
+            trigger: 'change'
+        }
+    ]
 
     const walk = (items: any[]) => {
         items.forEach((item: any) => {
@@ -60,7 +66,6 @@ export default function (questionaireItem: any) {
             }
             // Assign the value if a key exists
             if (itemKey) {
-                console.log(`Adding rules for ${itemKey}:`, currentRule)
                 rules[itemKey] = currentRule;
             }
 
@@ -72,6 +77,5 @@ export default function (questionaireItem: any) {
     }
 
     walk(questionaireItem)
-    console.log('Generated Rules:', rules)
     return rules
 }

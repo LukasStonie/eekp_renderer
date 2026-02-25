@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
         ORG_ID: config.ORG_ID
     });
 
-    console.log("Keystore path", config.authKeystorePath);
 
     const httpsAgent = new https.Agent({
         pfx: fs.readFileSync(config.authKeystorePath),

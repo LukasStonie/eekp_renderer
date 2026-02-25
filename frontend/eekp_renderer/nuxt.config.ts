@@ -1,5 +1,6 @@
 import { en } from "element-plus/es/locales.mjs";
 import { env } from "node:process";
+import binary from "./server/api/binary";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -7,7 +8,7 @@ export default defineNuxtConfig({
   modules: [
     '@element-plus/nuxt',
     '@nuxtjs/tailwindcss',
-    
+
   ],
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
@@ -33,7 +34,7 @@ export default defineNuxtConfig({
 
     kbsEntryPoint: env.KBS_ENTRY_POINT,
     xdsPid: env.XDS_PID,
-    ISO_TIME: env.ISO_TIME, 
+    ISO_TIME: env.ISO_TIME,
 
     jwtEntryPoint: env.JWT_ENTRY_POINT,
     jwtUsername: env.JWT_USERNAME,
@@ -41,13 +42,16 @@ export default defineNuxtConfig({
     grantType: env.GRANT_TYPE,
     scope: env.SCOPE,
     patientId: env.PATIENT_ID,
-    
 
+    binaryEndpoint: env.BINARY_ENDPOINT,
+    questionaireResponsesEndpoint: env.QUESTIONAIRE_RESPONSES_ENDPOINT,
     public: {
       // Diese Werte sind auch client-seitig verfügbar (unsicher)
       eekpBase: env.EEKP_BASE,
       eekpAliveEndpoint: env.ALIVE_ENDPOINT,
       eekpFindDocumentReferenceEndpoint: env.FIND_DOCUMENT_REFERENCE_ENDPOINT,
+      defaultQuestionaireIdentifierSystem: env.DEFAULT_QUESTIONAIRE_IDENTIFIER_SYSTEM
+
     }
   },
   vite: {
