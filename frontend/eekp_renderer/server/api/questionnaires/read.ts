@@ -1,7 +1,7 @@
 import https from 'node:https'
 import fs from 'node:fs'
 import axios from 'axios'
-import { getElgaAccessToken } from '../utils/elga_auth'
+import { getElgaAccessToken } from '../../utils/elga_auth'
 
 export default defineEventHandler(async (event) => {
     const params = getQuery(event)
@@ -12,8 +12,8 @@ export default defineEventHandler(async (event) => {
 
     const p12Path = config.keystorePath
     const caPath = config.truststorePath
-    const base = config.public.eekpBase
-    const endpoint = config.questionaireResponsesEndpoint
+    const base = config.eekpBase
+    const endpoint = config.questionnaireResponsesEndpoint
     let fullUrl = `${base}${endpoint}`
 
     if (id) {

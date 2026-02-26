@@ -76,7 +76,6 @@ onMounted(async () => {
         navigateTo('/DocumentReferences')
     }
     else {
-        console.log(sharedData.value)
         documentReference.value = sharedData.value?.resource
         openDocument(documentReference.value.content?.[0]?.attachment?.url)
     }

@@ -1,10 +1,10 @@
 <template>
-  <p class="italic text-xl my-8">{{ questionaire.description }}</p>
+  <p class="italic text-xl my-8">{{ questionnaire.description }}</p>
 
   <div class="grid grid-cols-4 gap-3">
     <div class="col-span-2 ">
       <div class="flex content-center justify-start mb-8">
-        <el-form :model="form" :rules="rules" :validate-on-rule-change="false" label-position="top" :key="selectedQuestionaire" ref="formRef"
+        <el-form :model="form" :rules="rules" :validate-on-rule-change="false" label-position="top" :key="selectedQuestionnaire" ref="formRef"
           max-width="300px" size="default">
           <el-form-item prop="identifier">
             <template #label>
@@ -21,7 +21,7 @@
             <el-input v-model="form['identifier']"></el-input>
           </el-form-item>
 
-          <QuestionNode v-for="rootItem in questionaire.outer_item" :key="rootItem.linkId" :item="rootItem" :form="form"
+          <QuestionNode v-for="rootItem in questionnaire.outer_item" :key="rootItem.linkId" :item="rootItem" :form="form"
             :level="0" />
 
           <el-button color="#FBEF7A" size="large" @click="submit()">Submit</el-button>
@@ -30,8 +30,10 @@
     </div>
     <div v-if="expertMode"
       class="bg-white col-span-2 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
-      <h3 class="font-bold mb-2">Questionaire Response Preview:</h3>
+      <h3 class="font-bold mb-2">Questionnaire Response Preview:</h3>
       <pre class="text-xs">{{ response }}</pre>
+      <h3 class="font-bold mb-2">Form:</h3>
+      <pre class="text-xs">{{ form }}</pre>
     </div>
   </div>
   <div class="fixed bottom-6 right-6 z-50">
@@ -51,17 +53,17 @@ import type { FormInstance, FormRules } from 'element-plus'
 import QuestionNode from '~/components/QuestionNode.vue'
 import HeaderSection from '~/components/HeaderSection.vue'
 import { mapToFhirResponse } from '~/utils/export_fhir'
-import parse_questionaire from '~/utils/parse_questionaire'
-import parse_questionaire_rules from '~/utils/parse_questionaire_rules'
+import parse_questionnaire from '~/utils/parse_questionnaire'
+import parse_questionnaire_rules from '~/utils/parse_questionnaire_rules'
 
-const props = defineProps(['reference', 'questionaireMapping', 'initialFormValues'])
+const props = defineProps(['reference', 'questionnaireMapping', 'initialFormValues'])
 const emit = defineEmits(['submitEvent'])
 
 const expertMode = ref(false)
 
-const selectedQuestionaire = ref(props.reference)
+const selectedQuestionnaire = ref(props.reference)
 
-const questionaire = ref<{ title: string, description: string, outer_item: any }>({ title: '', description: '', outer_item: {} })
+const questionnaire = ref<{ title: string, description: string, outer_item: any }>({ title: '', description: '', outer_item: {} })
 const formRef = ref<FormInstance>()
 const form = ref<any>({})
 const rules = ref<FormRules<any>>({})
@@ -75,12 +77,11 @@ onMounted(async () => {
 
 watch(() => props.reference, async (newRef) => {
   if (newRef) {
-    questionaire.value = newRef
-    console.log("Reference", questionaire.value)
+    questionnaire.value = newRef
   }
 })
 
-watch(() => props.questionaireMapping, async (newMapping) => {
+watch(() => props.questionnaireMapping, async (newMapping) => {
   if (newMapping) {
     // You can add logic here to update the form based on the new mapping if needed (e.g., pre-fill certain fields)
   }
@@ -89,17 +90,16 @@ watch(() => props.questionaireMapping, async (newMapping) => {
 watch(() => props.initialFormValues, async (newFormValues) => {
   if (newFormValues) {
     form.value = newFormValues
-    console.log("New initialFormValue", form.value)
   }
 })
 
 
-watch(questionaire, async (newData) => {
+watch(questionnaire, async (newData) => {
   if (newData && newData.outer_item) {
     if (!props.initialFormValues) {
-      form.value = parseQuestionaireFormBindingds(newData.outer_item)
+      form.value = parseQuestionnaireFormBindingds(newData.outer_item)
     }
-    rules.value = parse_questionaire_rules(newData.outer_item)
+    rules.value = parse_questionnaire_rules(newData.outer_item)
 
     if (formRef.value) {
       formRef.value.clearValidate()
@@ -121,7 +121,7 @@ const response = computed(() => {
         }
       ]
     },
-    questionnaire: props.questionaireMapping,
+    questionnaire: props.questionnaireMapping,
     authored: new Date().toISOString(),
     identifier: [
       {
@@ -129,7 +129,7 @@ const response = computed(() => {
         value: form.value.identifier
       }
     ],
-    item: mapToFhirResponse(questionaire.value.outer_item, form.value)
+    item: mapToFhirResponse(questionnaire.value.outer_item, form.value)
   }
 })
 

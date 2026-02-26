@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
 
     const p12Path = config.keystorePath
     const caPath = config.truststorePath
-    const base = config.public.eekpBase
-    const endpoint = config.public.eekpAliveEndpoint
+    const base = config.eekpBase
+    const endpoint = config.eekpAliveEndpoint
    
     const httpsAgent = new https.Agent({
         pfx: fs.readFileSync(p12Path),

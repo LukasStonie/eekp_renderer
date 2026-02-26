@@ -11,7 +11,7 @@
           FHIR-Format. Dies umfasst die spezifischen Kapitel zur Geburt (Schwangere und Kind), die Postpartale Periode
           sowie den Zustand des Kindes bei Entlassung oder Transfer.
         </p>
-        <NuxtLink to="/QuestionaireResponses">
+        <NuxtLink to="/QuestionnaireResponses">
           <el-button color="#FBEF7A" size="large" class="font-semibold">
             Zu den Questionnaire Responses
           </el-button>

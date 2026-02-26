@@ -17,10 +17,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     // Diese Werte sind nur server-seitig verfügbar (sicher)
-    keystorePath: 'certs/keystore.p12',
-    keystorePassword: 'Schokolade1411!',
-    truststorePath: 'certs/server-ca.pem',
-    birthQuestionairePath: 'questionaires/put_geburt.json',
+    keystorePath: env.KEYSTORE_PATH,
+    keystorePassword: env.KEYSTORE_PASSWORD,
+    truststorePath: env.TRUSTSTORE_PATH,
 
     authKeystorePath: env.AUTH_KEYSTORE_PATH,
     authKeystorePassword: env.AUTH_CERT_PASSWORD,
@@ -43,14 +42,14 @@ export default defineNuxtConfig({
     scope: env.SCOPE,
     patientId: env.PATIENT_ID,
 
+    eekpBase: env.EEKP_BASE,
+    eekpAliveEndpoint: env.ALIVE_ENDPOINT,
+    eekpFindDocumentReferenceEndpoint: env.FIND_DOCUMENT_REFERENCE_ENDPOINT,
     binaryEndpoint: env.BINARY_ENDPOINT,
-    questionaireResponsesEndpoint: env.QUESTIONAIRE_RESPONSES_ENDPOINT,
+    questionnaireResponsesEndpoint: env.QUESTIONAIRE_RESPONSES_ENDPOINT,
+
     public: {
-      // Diese Werte sind auch client-seitig verfügbar (unsicher)
-      eekpBase: env.EEKP_BASE,
-      eekpAliveEndpoint: env.ALIVE_ENDPOINT,
-      eekpFindDocumentReferenceEndpoint: env.FIND_DOCUMENT_REFERENCE_ENDPOINT,
-      defaultQuestionaireIdentifierSystem: env.DEFAULT_QUESTIONAIRE_IDENTIFIER_SYSTEM
+      defaultQuestionnaireIdentifierSystem: env.DEFAULT_QUESTIONAIRE_IDENTIFIER_SYSTEM
 
     }
   },

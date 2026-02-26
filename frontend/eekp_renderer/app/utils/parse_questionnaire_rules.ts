@@ -1,6 +1,6 @@
 import type { FormRules } from 'element-plus'
 
-export default function (questionaireItem: any) {
+export default function (questionnaireItem: any) {
 
     const rules = reactive<FormRules<any>>({})
     rules['identifier'] = [
@@ -76,6 +76,6 @@ export default function (questionaireItem: any) {
         })
     }
 
-    walk(questionaireItem)
+    walk(questionnaireItem)
     return rules
 }

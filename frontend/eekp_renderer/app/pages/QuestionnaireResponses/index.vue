@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <header-section text="Questionaire Responses" />
+        <header-section text="Questionnaire Responses" />
         <back-button path="/" />
 
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mt-4 w-full">
@@ -20,7 +20,7 @@
 
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item v-for="q in questionaires" :key="q.url"
+                            <el-dropdown-item v-for="q in questionnaires" :key="q.url"
                                 @click="handleAction({ type: 'new', data: q })">
                                 {{ q.title }}
                             </el-dropdown-item>
@@ -30,10 +30,10 @@
             </div>
         </div>
         <div class="flex justify-start">
-            <div v-if="questionaireResponses && questionaireResponses.length > 0" class="mt-5">
-                <el-table v-loading="loading" :data="questionaireResponses" row-key="resource.authored">
+            <div v-if="questionnaireResponses && questionnaireResponses.length > 0" class="mt-5">
+                <el-table v-loading="loading" :data="questionnaireResponses" row-key="resource.authored">
                     <el-table-column prop="resource.identifier[0].value" label="Identifier" width="250" />
-                    <el-table-column label="Questionaire" width="400">
+                    <el-table-column label="Questionnaire" width="400">
                         <template #default="{ row }">
                             <el-check-tag checked color="#59ACD7" v-if="row.resource?.questionnaire">
                                 {{ questionnaireTag(row.resource.questionnaire) }}
@@ -66,24 +66,25 @@
 
 <script setup lang="ts">
 import BackButton from '~/components/BackButton.vue';
-import questionaire_mapping from '~/utils/questionaire_mapping';
+import questionnaire_mapping from '~/utils/questionnaire_mapping';
 
 const config = useRuntimeConfig()
 const router = useRouter()
 const identifier = ref('')
-const questionaires = questionaire_mapping()
+const questionnaires = questionnaire_mapping()
 const loading = ref(false)
 
-const questionaireResponses = ref([])
+const questionnaireResponses = ref([])
 
 const searchForIdentifier = async (id: string) => {
     try {
         loading.value = true
-        const data: any = await $fetch('/api/get_questionaire_responses', {
+        console.log(`${config.public.defaultQuestionnaireIdentifierSystem}|${id}`)
+        const data: any = await $fetch('/api/questionnaires/read', {
             method: 'GET',
-            params: { identifier: `${config.public.defaultQuestionaireIdentifierSystem}|${id}` }
+            params: { identifier: `${config.public.defaultQuestionnaireIdentifierSystem}|${id}` }
         })
-        questionaireResponses.value = data.entry || []
+        questionnaireResponses.value = data.entry || []
     } catch (err) {
         console.error('Search failed:', err)
         ElMessage.error({ message: 'Fehler beim Abfragen der Questionnaire Response!', placement: 'top-right', duration: 0, showClose: true });
@@ -97,17 +98,17 @@ const handleAction = (params: { type: string, data: any }) => {
     if (params.type === 'new') {
         const sharedData = useState('create-data')
         sharedData.value = params.data
-        navigateTo('/QuestionaireResponses/new')
+        navigateTo('/QuestionnaireResponses/new')
     }
     else if (params.type === 'view') {
         const sharedData = useState('view-response-data')
         sharedData.value = params.data
-        navigateTo('/QuestionaireResponses/view')
+        navigateTo('/QuestionnaireResponses/view')
     }
 }
 
 const questionnaireTag = (questionnaire: string) => {
-    const foundMapping = questionaire_mapping().find(q => q.questionaireReference === questionnaire)
+    const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === questionnaire)
     if (foundMapping && foundMapping.title) return foundMapping.title
     else return questionnaire
 }

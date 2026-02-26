@@ -1,20 +1,21 @@
 <template>
     <div class="container">
-        <header-section text="Questionaire Response Details" />
-        <BackButton path="/QuestionaireResponses" />
-        <Formrender :reference="questionaire" :questionaireMapping="questionnaireMapping" :initialFormValues="form"
+        <header-section text="Questionnaire Response Details" />
+        <BackButton path="/QuestionnaireResponses" />
+        <Formrender :reference="questionnaire" :questionnaireMapping="questionnaireMapping" :initialFormValues="form"
             @submitEvent="submitCallback" />
     </div>
 </template>
 <script setup lang="ts">
 import BackButton from '~/components/BackButton.vue';
-import parse_questionaire from '~/utils/parse_questionaire';
-import parse_questionaire_rules from '~/utils/parse_questionaire_rules';
-import populate_questionaire from '~/utils/populate_questionaire';
-import questionaire_mapping from '~/utils/questionaire_mapping';
+import parse_questionnaire from '~/utils/parse_questionnaire';
+import parse_questionnaire_rules from '~/utils/parse_questionnaire_rules';
+import populate_questionnaire from '~/utils/populate_questionnaire';
+import questionnaire_mapping from '~/utils/questionnaire_mapping';
+import parseQuestionnaireFormBindings from '~/utils/parse_questionaire_form_bindingds';
 
 const sharedData: any = useState('view-response-data')
-const questionaire = ref<any>({})
+const questionnaire = ref<any>({})
 const questionnaireMapping = ref('')
 const responseId = ref('')
 const form = ref({})
@@ -22,7 +23,7 @@ const rules = ref({})
 
 onMounted(async () => {
     if (!sharedData.value) {
-        navigateTo('/QuestionaireResponses')
+        navigateTo('/QuestionnaireResponses')
     }
     else {
 
@@ -36,23 +37,21 @@ onMounted(async () => {
             const identifierParam = `${identifier?.system ?? ''}|${identifier?.value ?? ''}`
 
 
-            const foundMapping = questionaire_mapping().find(q => q.questionaireReference === sharedData.value.resource.questionnaire)
-            console.log(foundMapping)
-            questionnaireMapping.value = foundMapping.questionaireReference
-            console.log(questionnaireMapping.value)
+            const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === sharedData.value.resource.questionnaire)
+            questionnaireMapping.value = foundMapping.questionnaireReference
 
-            const questionaireReference = await $fetch(foundMapping?.url)
+            const questionnaireReference = await $fetch(foundMapping?.url)
 
-            questionaire.value = parse_questionaire(questionaireReference)
-            console.log(questionaire.value)
-            form.value = parseQuestionaireFormBindingds(questionaire.value.outer_item)
+            questionnaire.value = parse_questionnaire(questionnaireReference)
+
+            form.value = parseQuestionnaireFormBindingds(questionnaire.value.outer_item)
             form.value['identifier'] = identifier?.value
-            rules.value = parse_questionaire_rules(questionaire.value.outer_item)
+            rules.value = parse_questionnaire_rules(questionnaire.value.outer_item)
 
             const questionnaireResponse = sharedData.value
-            console.log(questionnaireResponse)
+
             responseId.value = sharedData.value.resource.id
-            populate_questionaire(form.value, questionnaireResponse.resource)
+            populate_questionnaire(form.value, questionnaireResponse.resource)
         } catch (err) {
             ElMessage.error({ message: 'Fehler beim Laden der benötigten Daten!', placement: 'top-right', duration: 0, showClose: true });
         } finally {
@@ -70,16 +69,12 @@ const submitCallback = async (response: any) => {
         background: 'rgba(0, 0, 0, 0.7)',
     })
     try {
-        console.log(response)
-        console.log("ResposneId", responseId.value)
         const identifier = response.identifier?.[0] ?? null;
         const identifierParam = `${identifier?.system ?? ''}|${identifier?.value ?? ''}`
         response.id = responseId.value
         response.identifier = [identifier]
 
-        console.log("Response: ", response)
-
-        const apiResponse = await $fetch('/api/update_questionaire_response', {
+        const apiResponse = await $fetch('/api/questionnaires/update', {
             method: 'POST',
             query: {
                 identifier: responseId.value
@@ -87,7 +82,7 @@ const submitCallback = async (response: any) => {
             body: response
         });
         ElMessage.success({ message: 'Questionnaire Response wurde erfolgreich geändert!', placement: 'top-right', duration: 0, showClose: true });
-        navigateTo('/QuestionaireResponses/')
+        navigateTo('/QuestionnaireResponses/')
     } catch (apiError) {
         ElMessage.error({ message: 'Fehler beim Ändern der Questionnaire Response!', placement: 'top-right', duration: 0, showClose: true });
     } finally {

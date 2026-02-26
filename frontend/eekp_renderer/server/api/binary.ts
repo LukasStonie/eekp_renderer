@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
     const p12Path = config.keystorePath
     const caPath = config.truststorePath
-    const base = config.public.eekpBase
+    const base = config.eekpBase
     const endpoint = config.binaryEndpoint
     const fullUrl = `${base}${endpoint}/${id}`
 
