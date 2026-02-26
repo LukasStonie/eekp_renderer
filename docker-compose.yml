@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+  frontend:
+    container_name: eekp-frontend-prod
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    # This line is key:
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production

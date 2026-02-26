@@ -12,7 +12,7 @@ import parse_questionnaire from '~/utils/parse_questionnaire';
 import parse_questionnaire_rules from '~/utils/parse_questionnaire_rules';
 import populate_questionnaire from '~/utils/populate_questionnaire';
 import questionnaire_mapping from '~/utils/questionnaire_mapping';
-import parseQuestionnaireFormBindings from '~/utils/parse_questionaire_form_bindingds';
+import parseQuestionnaireFormBindings from '~/utils/parse_questionnaire_form_bindingds';
 
 const sharedData: any = useState('view-response-data')
 const questionnaire = ref<any>({})
