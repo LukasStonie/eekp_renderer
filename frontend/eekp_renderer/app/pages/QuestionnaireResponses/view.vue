@@ -1,10 +1,10 @@
 <template>
     <header-section text="Questionnaire Response Details" />
 
-    <div class="container md:mx-auto px-8 xl:px-4 py-8 max-w-6xl">
+    <div class="container md:mx-auto px-8 xl:px-4 max-w-6xl">
         <BackButton path="/QuestionnaireResponses" />
-        <Formrender :reference="questionnaire" :questionnaireMapping="questionnaireMapping" :initialFormValues="form"
-            @submitEvent="submitCallback" />
+        <Formrender :editIdentifier="false" :reference="questionnaire" :questionnaireMapping="questionnaireMapping"
+            :initialFormValues="form" @submitEvent="submitCallback" />
     </div>
 </template>
 <script setup lang="ts">
@@ -34,21 +34,30 @@ onMounted(async () => {
             background: 'rgba(0, 0, 0, 0.7)',
         })
         try {
-            const identifier = sharedData.value.resource?.identifier?.[0] ?? null;
+            console.log("Received shared data", sharedData.value)
+            const identifier = sharedData.value.resource?.identifier?.[0] ?? sharedData.value.resource?.identifier ?? null;
             const identifierParam = `${identifier?.system ?? ''}|${identifier?.value ?? ''}`
-
+            console.log("Identifier", identifier)
 
             const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === sharedData.value.resource.questionnaire)
             questionnaireMapping.value = foundMapping.questionnaireReference
+            console.log("questionnaireMapping", questionnaireMapping.value)
 
-            const questionnaireReference = await $fetch(foundMapping?.url)
+            //const questionnaireReference = await $fetch(foundMapping?.url)
+             const questionnaireReference = await $fetch('/api/questionnaires/questionnaire',
+                {
+                    method: 'GET',
+                    query: {url: foundMapping.url}
+                }
+            )
 
             questionnaire.value = parse_questionnaire(questionnaireReference)
+            console.log("questionnaire", questionnaire.value)
 
             form.value = parseQuestionnaireFormBindingds(questionnaire.value.outer_item)
             form.value['identifier'] = identifier?.value
             rules.value = parse_questionnaire_rules(questionnaire.value.outer_item)
-
+            console.log("form", form.value)
             const questionnaireResponse = sharedData.value
 
             responseId.value = sharedData.value.resource.id
@@ -70,7 +79,7 @@ const submitCallback = async (response: any) => {
         background: 'rgba(0, 0, 0, 0.7)',
     })
     try {
-        const identifier = response.identifier?.[0] ?? null;
+        const identifier = sharedData.value.resource?.identifier?.[0] ?? sharedData.value.resource?.identifier ?? null;
         const identifierParam = `${identifier?.system ?? ''}|${identifier?.value ?? ''}`
         response.id = responseId.value
         response.identifier = [identifier]
@@ -82,7 +91,12 @@ const submitCallback = async (response: any) => {
             },
             body: response
         });
-        ElMessage.success({ message: 'Questionnaire Response wurde erfolgreich geändert!', placement: 'top-right', duration: 0, showClose: true });
+        ElMessage.success({
+            message: 'Questionnaire Response wurde erfolgreich geändert!',
+            placement: 'top-right',
+            duration: 0,
+            showClose: true
+        });
         navigateTo('/QuestionnaireResponses/')
     } catch (apiError) {
         ElMessage.error({ message: 'Fehler beim Ändern der Questionnaire Response!', placement: 'top-right', duration: 0, showClose: true });

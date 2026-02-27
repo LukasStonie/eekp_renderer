@@ -6,15 +6,13 @@ import { getElgaAccessToken } from '../utils/elga_auth'
 export default defineEventHandler(async (event) => {
     const params = getQuery(event)
 
-    const id = params.id as string
-
     const config = useRuntimeConfig()
 
     const p12Path = config.keystorePath
     const caPath = config.truststorePath
     const base = config.eekpBase
-    const endpoint = config.fhirEndpoint
-    const fullUrl = `${base}${endpoint}/${id}`
+    const endpoint = config.fhirEndpoint 
+    const fullUrl = `${base}${endpoint}${params.resource as string}`
 
     const token = await getElgaAccessToken()
 
@@ -26,7 +24,7 @@ export default defineEventHandler(async (event) => {
         ca: fs.readFileSync(caPath),
         rejectUnauthorized: true
     })
-
+    console.log("Requested resource: ",fullUrl)
     try {
         const response = await axios.get(`${fullUrl}`, {
             httpsAgent,

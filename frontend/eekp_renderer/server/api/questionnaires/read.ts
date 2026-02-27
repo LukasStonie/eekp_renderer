@@ -6,8 +6,6 @@ import { getElgaAccessToken } from '../../utils/elga_auth'
 export default defineEventHandler(async (event) => {
     const params = getQuery(event)
 
-    const id = params.identifier as string
-
     const config = useRuntimeConfig()
 
     const p12Path = config.keystorePath
@@ -15,10 +13,6 @@ export default defineEventHandler(async (event) => {
     const base = config.eekpBase
     const endpoint = config.questionnaireResponsesEndpoint
     let fullUrl = `${base}${endpoint}`
-
-    if (id) {
-        fullUrl += `?identifier=${encodeURIComponent(id)}`
-    }
 
     const token = await getElgaAccessToken()
 
@@ -34,6 +28,7 @@ export default defineEventHandler(async (event) => {
     try {
         const response = await axios.get(`${fullUrl}`, {
             httpsAgent,
+            params: params,
             headers: {
                 'Accept': 'application/fhir+json',
                 'e-agw-client': 'zgf1',

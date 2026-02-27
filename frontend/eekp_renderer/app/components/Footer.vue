@@ -5,7 +5,7 @@
         
         <div class="mb-6 md:mb-0 text-center md:text-left">
           <h2 class="text-gray-800 text-xl font-bold tracking-tight">
-            🚀 ElternKindPass <span class="text-blue-600 text-sm font-normal">Hackathon Edition</span>
+            🚀 ElternKindPass <br><span class="text-blue-600 text-sm font-normal">Hackathon Edition</span>
           </h2>
         </div>
 
@@ -28,8 +28,6 @@
         <p>© 2026 Hackathon</p>
         <div class="flex items-center space-x-4 mt-4 md:mt-0">
           <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded">Prototype Only</span>
-          <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-          <span>No Data Collected</span>
         </div>
       </div>
     </div>

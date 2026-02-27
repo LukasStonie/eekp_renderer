@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     eekpBase: env.EEKP_BASE,
     eekpAliveEndpoint: env.ALIVE_ENDPOINT,
     eekpFindDocumentReferenceEndpoint: env.FIND_DOCUMENT_REFERENCE_ENDPOINT,
-    binaryEndpoint: env.BINARY_ENDPOINT,
+    fhirEndpoint: env.FHIR_ENDPOINT,
     questionnaireResponsesEndpoint: env.QUESTIONAIRE_RESPONSES_ENDPOINT,
 
     public: {
