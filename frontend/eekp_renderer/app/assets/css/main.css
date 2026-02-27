@@ -22,6 +22,10 @@ body {
 
   --el-color-primary-dark-2: #F3DD07;
   /* banana-cream-700 (Active/Click) */
+
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 .unit-addon {
@@ -36,7 +40,7 @@ body {
   border-bottom-right-radius: var(--el-border-radius-base);
   font-size: 13px;
   white-space: nowrap;
-  height: 32px;
+  height: 40px;
 }
 
 .bg-gradient-blue-to-yellow {

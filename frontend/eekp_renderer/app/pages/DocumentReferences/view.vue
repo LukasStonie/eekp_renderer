@@ -1,6 +1,7 @@
 <template>
-    <div class="container">
-        <header-section text="Dokumentenreferenzen Details" />
+    <header-section text="Dokumentenreferenzen Details" />
+
+    <div class="container md:mx-auto px-8 xl:px-4 py-8 max-w-6xl">
         <BackButton path="/DocumentReferences" />
 
         <div class="my-5 grid grid-cols-2 gap-4">

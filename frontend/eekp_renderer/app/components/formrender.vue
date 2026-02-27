@@ -1,50 +1,102 @@
 <template>
-  <p class="italic text-xl my-8">{{ questionnaire.description }}</p>
+  <div class="max-w-6xl mx-auto">
+    <p class="italic text-lg md:text-xl text-gray-600 my-8 leading-relaxed border-l-4 border-blue-400 pl-4">
+      {{ questionnaire.description }}
+    </p>
 
-  <div class="grid grid-cols-4 gap-3">
-    <div class="col-span-2 ">
-      <div class="flex content-center justify-start mb-8">
-        <el-form :model="form" :rules="rules" :validate-on-rule-change="false" label-position="top" :key="selectedQuestionnaire" ref="formRef"
-          max-width="300px" size="default">
-          <el-form-item prop="identifier">
-            <template #label>
-              <span class="inline-flex items-center gap-1">
-                <span class="text-1xl font-semibold text-gray-700">Identifier</span>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+      
+      <div :class="expertMode ? 'lg:col-span-2' : 'lg:col-span-3'">
+        <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-100 shadow-sm">
+          <el-form 
+            :model="form" 
+            :rules="rules" 
+            :validate-on-rule-change="false" 
+            label-position="top" 
+            :key="selectedQuestionnaire" 
+            ref="formRef"
+            size="large"
+          >
+            <el-form-item prop="identifier" class="mb-8">
+              <template #label>
+                <span class="inline-flex items-center gap-2">
+                  <span class="text-lg font-bold text-gray-700">Identifier</span>
+                  <el-tooltip content="Eindeutige ID für spätere Suche" placement="right">
+                    <el-icon class="cursor-help text-blue-500 text-lg">
+                      <ElIconQuestionFilled />
+                    </el-icon>
+                  </el-tooltip>
+                </span>
+              </template>
+              <el-input 
+                v-model="form['identifier']" 
+                placeholder="z.B. PAT-123-2026" 
+                class="max-w-md"
+              />
+            </el-form-item>
 
-                <el-tooltip content="Identifier für spätere Suche" placement="right">
-                  <el-icon class="cursor-help text-blue-500">
-                    <ElIconQuestionFilled />
-                  </el-icon>
-                </el-tooltip>
-              </span>
-            </template>
-            <el-input v-model="form['identifier']"></el-input>
-          </el-form-item>
+            <div class="space-y-6 mb-10">
+              <QuestionNode 
+                v-for="rootItem in questionnaire.outer_item" 
+                :key="rootItem.linkId" 
+                :item="rootItem" 
+                :form="form"
+                :level="0" 
+              />
+            </div>
 
-          <QuestionNode v-for="rootItem in questionnaire.outer_item" :key="rootItem.linkId" :item="rootItem" :form="form"
-            :level="0" />
-
-          <el-button color="#FBEF7A" size="large" @click="submit()">Submit</el-button>
-        </el-form>
+            <div class="pt-6 border-t border-gray-100">
+              <el-button 
+                color="#FBEF7A" 
+                size="large" 
+                @click="submit()" 
+                class="font-bold px-10 shadow-sm hover:shadow-md transition-all"
+              >
+                Eintrag Speichern
+              </el-button>
+            </div>
+          </el-form>
+        </div>
       </div>
+
+      <transition name="el-zoom-in-top">
+        <div 
+          v-if="expertMode"
+          class="lg:col-span-2 sticky top-4 space-y-4 h-[calc(100vh-2rem)] flex flex-col"
+        >
+          <div class="bg-gray-900 rounded-xl p-4 shadow-lg flex-1 flex flex-col overflow-hidden">
+            <h3 class="text-blue-400 font-mono text-sm mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+              FHIR QuestionnaireResponse
+            </h3>
+            <pre class="text-gray-300 text-[10px] md:text-xs overflow-auto custom-scrollbar flex-1 bg-black/30 p-2 rounded">
+{{ JSON.stringify(response, null, 2) }}
+            </pre>
+          </div>
+        </div>
+      </transition>
     </div>
-    <div v-if="expertMode"
-      class="bg-white col-span-2 sticky top-4 h-fit p-4 rounded shadow-sm overflow-auto max-h-screen">
-      <h3 class="font-bold mb-2">Questionnaire Response Preview:</h3>
-      <pre class="text-xs">{{ response }}</pre>
-      <h3 class="font-bold mb-2">Form:</h3>
-      <pre class="text-xs">{{ form }}</pre>
+
+    <div class="fixed bottom-10 right-10 z-50">
+      <el-tooltip 
+        :content="expertMode ? 'Expert Mode schließen' : 'Expert Mode öffnen (FHIR Preview)'" 
+        placement="top"
+      >
+        <el-button 
+          type="primary" 
+          size="large" 
+          circle 
+          color="#FBEF7A" 
+          class="!w-16 !h-16 shadow-2xl transition-all hover:scale-110"
+          @click="expertMode = !expertMode"
+        >
+          <el-icon class="text-2xl">
+            <ElIconClose :size="40" v-if="expertMode"/>
+            <ElIconCpu :size="40" v-else/>
+          </el-icon>
+        </el-button>
+      </el-tooltip>
     </div>
-  </div>
-  <div class="fixed bottom-6 right-6 z-50">
-    <el-tooltip content="Toggle Expert Mode - shows form data and FHIR response preview" placement="top">
-      <el-button type="primary" size="large" circle color="#FBEF7A" class="fab-shadow !w-14 !h-14 !text-xl"
-        @click="expertMode = !expertMode">
-        <el-icon>
-          <ElIconDocument />
-        </el-icon>
-      </el-button>
-    </el-tooltip>
   </div>
 </template>
 

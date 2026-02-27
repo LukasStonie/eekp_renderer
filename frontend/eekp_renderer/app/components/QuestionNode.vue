@@ -4,7 +4,7 @@
         style="max-width: 800px;">
         <template #label>
             <span class="inline-flex items-center gap-1">
-                <span class="text-1xl font-semibold text-gray-700">{{ item.text }} ({{ item.linkId }})</span>
+                <span class="text-1xl font-semibold text-gray-700">{{ item.text }}</span>
 
                 <el-tooltip v-if="hint" :content="hint" placement="right">
                     <el-icon class="cursor-help text-blue-500">

@@ -1,6 +1,7 @@
 <template>
-    <div class="container">
-        <header-section :text="questionnaire?.title ?? ''" />
+    <header-section :text="questionnaire?.title ?? ''" />
+
+    <div class="container md:mx-auto px-8 xl:px-4 py-8 max-w-6xl">
         <BackButton path="/QuestionnaireResponses" />
         <Formrender :reference="questionnaire" :questionnaireMapping="questionnaireMapping"
             @submitEvent="submitCallback" />
