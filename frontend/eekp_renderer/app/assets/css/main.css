@@ -22,6 +22,10 @@ body {
 
   --el-color-primary-dark-2: #F3DD07;
   /* banana-cream-700 (Active/Click) */
+
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 .unit-addon {
