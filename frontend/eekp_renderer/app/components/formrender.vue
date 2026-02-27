@@ -169,16 +169,45 @@ const response = computed(() => {
 })
 
 const copyToClipboard = async (text: string) => {
-  try {
-    await navigator.clipboard.writeText(text)
-    ElMessage({
-      message: 'FHIR JSON in die Zwischenablage kopiert!',
-      type: 'success',
-      placement: 'top-right',
-    })
-  } catch (err) {
-    ElMessage.error('Fehler beim Kopieren')
+  // Check if the modern API is available
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text)
+      showSuccess()
+      return
+    } catch (err) {
+      console.error('Clipboard API failed', err)
+    }
   }
+
+  // Fallback for non-HTTPS or failed modern API
+  try {
+    const textArea = document.createElement("textarea")
+    textArea.value = text
+    // Ensure the textarea is not visible but part of the DOM
+    textArea.style.position = "fixed"
+    textArea.style.left = "-9999px"
+    textArea.style.top = "0"
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    
+    const successful = document.execCommand('copy')
+    document.body.removeChild(textArea)
+    
+    if (successful) showSuccess()
+    else throw new Error('Copy command failed')
+  } catch (err) {
+    ElMessage.error('Fehler beim Kopieren: Browser-Sicherheit verhindert Zugriff')
+  }
+}
+
+const showSuccess = () => {
+  ElMessage({
+    message: 'FHIR JSON in die Zwischenablage kopiert!',
+    type: 'success',
+    placement: 'top-right',
+  })
 }
 
 
