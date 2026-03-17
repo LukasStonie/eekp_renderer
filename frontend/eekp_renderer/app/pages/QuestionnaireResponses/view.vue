@@ -34,14 +34,11 @@ onMounted(async () => {
             background: 'rgba(0, 0, 0, 0.7)',
         })
         try {
-            console.log("Received shared data", sharedData.value)
             const identifier = sharedData.value.resource?.identifier?.[0] ?? sharedData.value.resource?.identifier ?? null;
             const identifierParam = `${identifier?.system ?? ''}|${identifier?.value ?? ''}`
-            console.log("Identifier", identifier)
 
             const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === sharedData.value.resource.questionnaire)
             questionnaireMapping.value = foundMapping.questionnaireReference
-            console.log("questionnaireMapping", questionnaireMapping.value)
 
             //const questionnaireReference = await $fetch(foundMapping?.url)
              const questionnaireReference = await $fetch('/api/questionnaires/questionnaire',
@@ -52,12 +49,10 @@ onMounted(async () => {
             )
 
             questionnaire.value = parse_questionnaire(questionnaireReference)
-            console.log("questionnaire", questionnaire.value)
 
             form.value = parseQuestionnaireFormBindingds(questionnaire.value.outer_item)
             form.value['identifier'] = identifier?.value
             rules.value = parse_questionnaire_rules(questionnaire.value.outer_item)
-            console.log("form", form.value)
             const questionnaireResponse = sharedData.value
 
             responseId.value = sharedData.value.resource.id

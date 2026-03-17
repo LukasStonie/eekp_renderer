@@ -112,12 +112,11 @@ const handleAction = async (params: { type: string, data: any }) => {
     if (params.type === 'view') {
 
 
-        const questionnaireResponse = await fetchRelatedResource(params.data)
+        const questionnaireResponse = await fetchRelatedResource(params.data, "application/fhir+json")
 
         if (questionnaireResponse) {
             const sharedData = useState('view-response-data')
             sharedData.value = { resource: questionnaireResponse }
-            console.log(sharedData.value)
             navigateTo('/QuestionnaireResponses/view',)
         }
     }
@@ -130,7 +129,7 @@ const openDocument = async (url: string) => {
         background: 'rgba(0, 0, 0, 0.7)',
     })
     try {
-        const data = await fetchRelatedResource(url)
+        const data = await fetchRelatedResource(url, "application/pdf")
         attachmentContent.value = `data:application/pdf;base64,${data.data}`
     } catch (err) {
         console.error('Failed to open document:', err)
@@ -141,17 +140,17 @@ const openDocument = async (url: string) => {
     }
 }
 
-const fetchRelatedResource = async (resource: string) => {
+const fetchRelatedResource = async (resource: string, accept: string) => {
 
     const loading = ElLoading.service({
         lock: true,
         text: 'Verarbeiten',
         background: 'rgba(0, 0, 0, 0.7)',
     })
-    try {
+    try { 
         const data = await $fetch('/api/resource', {
             method: 'GET',
-            query: { resource: resource.startsWith('/') ? resource : '/' + resource }
+            query: { resource:  resource.startsWith('/') ? "/"+ resource : '/' + resource, accept: accept}
         })
         return data
     } catch (err) {

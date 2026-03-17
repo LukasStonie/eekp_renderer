@@ -1,9 +1,10 @@
 import https from 'node:https'
 import fs from 'node:fs'
 import axios from 'axios'
-import { getElgaAccessToken } from '../../utils/elga_auth'
+//import { getElgaAccessToken } from '../../utils/elga_auth'
 
 export default defineEventHandler(async (event) => {
+    console.log("In server/api/questionnaires/create.ts")
     const body = await readBody(event)
     const questionnaireResponse = body
 
@@ -15,26 +16,26 @@ export default defineEventHandler(async (event) => {
     const endpoint = config.questionnaireResponsesEndpoint
     const fullUrl = `${base}${endpoint}`
 
-    const token = await getElgaAccessToken()
+    //const token = await getElgaAccessToken()
 
 
 
-    const httpsAgent = new https.Agent({
+    /*const httpsAgent = new https.Agent({
         pfx: fs.readFileSync(p12Path),
         passphrase: config.keystorePassword,
         ca: fs.readFileSync(caPath),
         rejectUnauthorized: true
-    })
+    })*/
         
     try {
         const response = await axios.post(`${fullUrl}`, questionnaireResponse,
             {
-                httpsAgent,
+                //httpsAgent,
                 headers: {
                     'Content-Type': 'application/fhir+json',
                     'Accept': 'application/fhir+json',
-                    'Authorization': `Bearer ${token}`,
-                    'e-agw-client': 'zgf1',
+                    //'Authorization': `Bearer ${token}`,
+                    //'e-agw-client': 'zgf1',
                 },
     // This ensures the data is sent exactly as a raw string
     transformRequest: [(data) => {

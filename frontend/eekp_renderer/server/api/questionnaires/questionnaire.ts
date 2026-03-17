@@ -1,7 +1,7 @@
 import https from 'node:https'
 import fs from 'node:fs'
 import axios from 'axios'
-import { getElgaAccessToken } from '../../utils/elga_auth'
+//import { getElgaAccessToken } from '../../utils/elga_auth'
 
 export default defineEventHandler(async (event) => {
     const params = getQuery(event)

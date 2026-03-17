@@ -5,7 +5,6 @@
     <main class="container md:mx-auto px-8 xl:px-4 max-w-6xl flex-grow">
 
       <back-button path="/" class="mb-6" />
-
       <div class="mt-5">
         <div v-if="docReferences && docReferences.length > 0" class="overflow-x-auto">
           <transition name="el-zoom-in-top" appear>
@@ -99,9 +98,9 @@ const checkDocumentReferences = async () => {
   try {
     const data = await $fetch('/api/resource', {
       method: 'GET',
-      query: {resource: 'DocumentReference'}
+      query: {resource: '/DocumentReference/131378686', accept: "application/fhir+json"}
     })
-    docReferences.value = data.entry
+    docReferences.value = data?.entry ? data.entry : [{resource: data}]
   } catch (err) {
     console.error('Fetch failed:', err)
     ElMessage.error({ message: 'Fehler beim Laden der Document References!', placement: 'top-right', duration: 0, showClose: true });

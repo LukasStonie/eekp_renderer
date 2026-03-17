@@ -50,11 +50,11 @@
 
               <el-table-column label="Questionnaire" min-width="300">
                 <template #default="{ row }">
-                  <el-check-tag checked color="#59ACD7" v-if="row.resource?.questionnaire"
+                  <el-check-tag checked :type="questionnaireTagType(row.resource?.questionnaire)" v-if="row.resource?.questionnaire"
                     class="whitespace-normal h-auto py-1">
                     {{ questionnaireTag(row.resource.questionnaire) }}
                   </el-check-tag>
-                  <el-check-tag checked color="#59ACD7" v-else-if="row.questionnaire"
+                  <el-check-tag checked :type="questionnaireTagType(row.questionnaire)" v-else-if="row.questionnaire"
                     class="whitespace-normal h-auto py-1">
                     {{ questionnaireTag(row.questionnaire) }}
                   </el-check-tag>
@@ -106,7 +106,6 @@ const questionnaireResponses = ref([])
 
 onMounted(async () => {
 
-  console.log("On Mounted")
   const pageLoading = ElLoading.service({
     lock: true,
     text: 'Verarbeiten',
@@ -120,7 +119,6 @@ onMounted(async () => {
     })
 
     questionnaireResponses.value = data.entry || []
-    console.log(questionnaireResponses.value)
   } catch (err) {
     console.error('Search failed:', err)
     ElMessage.error({ message: 'Fehler beim Abfragen der Questionnaire Responses!', placement: 'top-right', duration: 0, showClose: true });
@@ -132,7 +130,6 @@ onMounted(async () => {
 const searchForIdentifier = async (id: string) => {
   try {
     loading.value = true
-    console.log(`${config.public.defaultQuestionnaireIdentifierSystem}|${id}`)
     const data: any = await $fetch('/api/questionnaires/read', {
       method: 'GET',
       params: {
@@ -168,6 +165,12 @@ const handleAction = (params: { type: string, data: any }) => {
 const questionnaireTag = (questionnaire: string) => {
   const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === questionnaire)
   if (foundMapping && foundMapping.title) return foundMapping.title
-  else return questionnaire
+  else return "Unbekannt" //questionnaire
+}
+
+const questionnaireTagType = (questionnaire: string) => {
+  const foundMapping = questionnaire_mapping().find(q => q.questionnaireReference === questionnaire)
+  if (foundMapping && foundMapping.title) return "primary"
+  else return "info" //questionnaire
 }
 </script>

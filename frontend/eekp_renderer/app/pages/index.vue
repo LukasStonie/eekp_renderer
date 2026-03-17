@@ -2,7 +2,6 @@
   <header-section text="ElternKindPass" />
   <transition name="el-zoom-in-top" appear>
     <main class="container md:mx-auto px-8 xl:px-4 max-w-6xl">
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 items-center">
         <div class="md:col-span-2 text-center md:text-left">
           <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">

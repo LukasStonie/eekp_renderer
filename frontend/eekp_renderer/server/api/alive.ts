@@ -3,25 +3,26 @@ import fs from 'node:fs'
 import axios from 'axios'
 
 export default defineEventHandler(async (event) => {
+    console.log("In server/api/alive.ts")
     const config = useRuntimeConfig()
 
-    const p12Path = config.keystorePath
-    const caPath = config.truststorePath
+    //const p12Path = config.keystorePath
+    //const caPath = config.truststorePath
     const base = config.eekpBase
     const endpoint = config.eekpAliveEndpoint
    
-    const httpsAgent = new https.Agent({
+    /*const httpsAgent = new https.Agent({
         pfx: fs.readFileSync(p12Path),
         passphrase: config.keystorePassword,
         
         ca: fs.readFileSync(caPath),
     
         rejectUnauthorized: true
-    })
+    })*/
 
     try {
         const response = await axios.get(`${base}${endpoint}`, {
-            httpsAgent,
+            //httpsAgent,
             headers: {
             'Accept': 'application/fhir+json'
             }

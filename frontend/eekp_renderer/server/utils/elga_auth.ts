@@ -1,5 +1,6 @@
 // server/utils/elgaAuth.ts
 export const getElgaAccessToken = async () => {
+  console.log("get ElgaAccessToken method called")
   const storage = useStorage('data')
   const CACHE_KEY = 'elga:auth_session'
 
